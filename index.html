@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crée ton avatar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+
+    body {
+      background: #1c1c2e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* ── iPhone shell ── */
+    .iphone-wrap { display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    .iphone {
+      width: 393px;
+      height: 852px;
+      transform-origin: center center;
+      flex-shrink: 0;
+      background: #f4ebe3;
+      border-radius: 56px;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1.5px #3a3a3a,
+        0 0 0 3.5px #1a1a1a,
+        0 0 0 5px #2e2e2e,
+        0 60px 140px rgba(0,0,0,0.75),
+        inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    /* ── Status bar ── */
+    .status-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50px;
+      padding: 14px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 30;
+      pointer-events: none;
+    }
+    .status-time { font-size: 15px; font-weight: 700; color: #111; letter-spacing: -0.3px; }
+    .status-icons { display: flex; align-items: center; gap: 6px; }
+
+    /* ── Steps container ── */
+    .steps {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step {
+      position: absolute;
+      inset: 0;
+      padding: 58px 22px 34px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+      will-change: transform, opacity;
+    }
+
+    .step.hidden-left  { transform: translateX(-100%); opacity: 0; pointer-events: none; }
+    .step.hidden-right { transform: translateX(100%);  opacity: 0; pointer-events: none; }
+    .step.active       { transform: translateX(0);     opacity: 1; }
+
+    /* ── Progress dots ── */
+    .progress { display: flex; align-items: center; gap: 7px; margin-bottom: 7px; }
+    .dot { height: 8px; border-radius: 4px; background: #d8cfc9; width: 8px; transition: width 0.3s, background 0.3s; }
+    .dot.active { width: 32px; background: #e5197e; }
+
+    .step-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+      color: #e5197e; text-transform: uppercase;
+    }
+
+    /* ── Titles ── */
+    .title {
+      font-size: 31px; font-weight: 800; color: #111;
+      text-align: center; letter-spacing: -0.4px; line-height: 1.15;
+    }
+    .subtitle {
+      font-size: 15px; font-weight: 400; color: #9a8f8a;
+      text-align: center; line-height: 1.5; max-width: 250px;
+    }
+
+    /* ── Step 1 : gender options ── */
+    .options { width: 100%; display: flex; flex-direction: column; gap: 13px; }
+
+    .option {
+      background: #fff; border-radius: 22px; padding: 14px 18px;
+      display: flex; align-items: center; gap: 14px; cursor: pointer;
+      border: 2.5px solid transparent;
+      transition: border-color 0.18s ease;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    }
+    .option.selected { border-color: #e5197e; }
+
+    .av {
+      width: 64px; height: 64px; flex-shrink: 0;
+      border-radius: 50%; overflow: hidden;
+      background-image: url('avatar.png');
+      background-size: 300% 300%; background-repeat: no-repeat;
+    }
+    .av-homme  { background-position: 0%   0%; }
+    .av-femme  { background-position: 100% 0%; }
+    .av-neutre { background-position: 50% 50%; }
+
+    .option-label { font-size: 18px; font-weight: 700; color: #111; flex: 1; }
+
+    .radio {
+      width: 27px; height: 27px; border-radius: 50%;
+      border: 2px solid #c8bfba;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.15s ease;
+    }
+    .option.selected .radio { background: #e5197e; border-color: #e5197e; }
+    .radio svg { display: none; }
+    .option.selected .radio svg { display: block; }
+
+    /* ── Step 2 & 3 : avatar preview ── */
+    .avatar-preview {
+      object-fit: contain;
+      filter: drop-shadow(0 12px 28px rgba(0,0,0,0.18));
+    }
+
+    /* ── Cards (step 2 & 3) ── */
+    .card {
+      width: 100%;
+      background: #fff;
+      border-radius: 22px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    }
+    .card-title { font-size: 16px; font-weight: 800; color: #111; margin-bottom: 14px; }
+
+    /* Style thumbnails */
+    .styles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .style-thumb {
+      aspect-ratio: 1; border-radius: 14px;
+      background-image:
+        linear-gradient(45deg, #ddd 25%, transparent 25%),
+        linear-gradient(-45deg, #ddd 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ddd 75%),
+        linear-gradient(-45deg, transparent 75%, #ddd 75%);
+      background-size: 12px 12px;
+      background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+      background-color: #f0f0f0;
+      cursor: pointer; border: 2.5px solid transparent; transition: border-color 0.15s;
+    }
+    .style-thumb.selected { border-color: #e5197e; }
+
+    /* Color swatches */
+    .colors-row { display: flex; align-items: center; gap: 10px; }
+    .swatch {
+      width: 44px; height: 44px; border-radius: 50%;
+      cursor: pointer; flex-shrink: 0; transition: box-shadow 0.15s;
+    }
+    .swatch.selected { box-shadow: 0 0 0 3px #fff, 0 0 0 5.5px #e5197e; }
+    .step3 .swatch { width: 52px; height: 52px; }
+
+    /* ── Button ── */
+    .btn-wrap { width: 100%; margin-top: auto; padding-top: 16px; }
+    .btn-next {
+      width: 100%; height: 60px;
+      background: #e5197e; border: none; border-radius: 20px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      cursor: pointer; box-shadow: 0 10px 28px rgba(229,25,126,0.35);
+    }
+    .btn-next span { font-size: 17px; font-weight: 700; color: #fff; font-family: inherit; }
+
+    /* ── Home bar ── */
+    .home-bar {
+      position: absolute; bottom: 9px; left: 50%; transform: translateX(-50%);
+      width: 128px; height: 5px; background: rgba(0,0,0,0.22); border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="iphone-wrap">
+<div class="iphone">
+
+  <!-- Status bar (permanent) -->
+  <div class="status-bar">
+    <span class="status-time" id="clock">9:41</span>
+    <div class="status-icons">
+      <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
+        <rect x="0"    y="8"   width="3" height="4"   rx="1" fill="#111"/>
+        <rect x="4.5"  y="5.5" width="3" height="6.5" rx="1" fill="#111"/>
+        <rect x="9"    y="3"   width="3" height="9"   rx="1" fill="#111"/>
+        <rect x="13.5" y="0"   width="3" height="12"  rx="1" fill="#111"/>
+      </svg>
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+        <path d="M8 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#111"/>
+        <path d="M3.5 6.5C4.9 5.1 6.35 4.4 8 4.4s3.1.7 4.5 2.1" stroke="#111" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M1 4C3 2 5.4 1 8 1s5 1 7 3" stroke="#111" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      </svg>
+      <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+        <rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#111" stroke-width="1.1"/>
+        <rect x="2"   y="2"   width="16" height="8"  rx="2"   fill="#111"/>
+        <path d="M23 4v4" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <!-- ══════════════ ÉTAPE 1 ══════════════ -->
+    <div class="step active" id="step1">
+      <div class="progress">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <p class="step-label" style="margin-bottom:38px">Étape 1 sur 3</p>
+
+      <h1 class="title" style="margin-bottom:10px">Crée ton avatar</h1>
+      <p class="subtitle" style="margin-bottom:30px">Personnalise ton profil au sein de ta collocation</p>
+
+      <div class="options">
+        <div class="option" onclick="pick(this)">
+          <div class="av av-homme"></div>
+          <span class="option-label">Homme</span>
+          <div class="radio">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7l4 4 6-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="option selected" onclick="pick(this)">
+          <div class="av av-femme"></div>
+          <span class="option-label">Femme</span>
+          <div class="radio">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7l4 4 6-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="option" onclick="pick(this)">
+          <div class="av av-neutre"></div>
+          <span class="option-label">Neutre</span>
+          <div class="radio">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7l4 4 6-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-wrap">
+        <button class="btn-next" onclick="goTo(2)">
+          <span>Suivant</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════ ÉTAPE 2 ══════════════ -->
+    <div class="step hidden-right" id="step2">
+      <div class="progress">
+        <div class="dot"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+      </div>
+      <p class="step-label" style="margin-bottom:20px">Étape 2 sur 3</p>
+
+      <h1 class="title" style="margin-bottom:16px">Choisis ta coupe !</h1>
+
+      <img class="avatar-preview" src="filleblonde.png" alt="avatar" style="width:170px;height:150px;margin-bottom:18px"/>
+
+      <div class="card" style="margin-bottom:14px">
+        <p class="card-title">Styles</p>
+        <div class="styles-grid">
+          <div class="style-thumb selected" onclick="pickStyle(this)"></div>
+          <div class="style-thumb" onclick="pickStyle(this)"></div>
+          <div class="style-thumb" onclick="pickStyle(this)"></div>
+          <div class="style-thumb" onclick="pickStyle(this)"></div>
+          <div class="style-thumb" onclick="pickStyle(this)"></div>
+          <div class="style-thumb" onclick="pickStyle(this)"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-title">Couleurs</p>
+        <div class="colors-row">
+          <div class="swatch selected" style="background:#f0d030" onclick="pickColor2(this)"></div>
+          <div class="swatch" style="background:#c0bab4" onclick="pickColor2(this)"></div>
+          <div class="swatch" style="background:#c88c18" onclick="pickColor2(this)"></div>
+          <div class="swatch" style="background:#4a2830" onclick="pickColor2(this)"></div>
+          <div class="swatch" style="background:#a8a4a0" onclick="pickColor2(this)"></div>
+          <div class="swatch" style="background:#d0ccca" onclick="pickColor2(this)"></div>
+        </div>
+      </div>
+
+      <div class="btn-wrap">
+        <button class="btn-next" onclick="goTo(3)">
+          <span>Suivant</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════ ÉTAPE 3 ══════════════ -->
+    <div class="step step3 hidden-right" id="step3">
+      <div class="progress">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot active"></div>
+      </div>
+      <p class="step-label" style="margin-bottom:20px">Étape 3 sur 3</p>
+
+      <h1 class="title">Choisis le coloris de<br>tes yeux</h1>
+
+      <img class="avatar-preview" src="filleblonde.png" alt="avatar" style="width:185px;height:165px;margin:32px 0 36px"/>
+
+      <div class="card">
+        <p class="card-title">Couleurs</p>
+        <div class="colors-row">
+          <div class="swatch selected" style="background:#60b0e8" onclick="pickColor3(this)"></div>
+          <div class="swatch" style="background:#6b3020"          onclick="pickColor3(this)"></div>
+          <div class="swatch" style="background:#2e6820"          onclick="pickColor3(this)"></div>
+          <div class="swatch" style="background:#b0b0b0"          onclick="pickColor3(this)"></div>
+        </div>
+      </div>
+
+      <div class="btn-wrap">
+        <button class="btn-next">
+          <span>C'est parti !</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /steps -->
+
+  <div class="home-bar"></div>
+</div>
+</div>
+
+<script>
+  /* ── Horloge ── */
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.getHours().toString().padStart(2,'0') + ':' +
+      now.getMinutes().toString().padStart(2,'0');
+  }
+  updateClock();
+  setInterval(updateClock, 10000);
+
+  /* ── Navigation ── */
+  let current = 1;
+
+  function goTo(next) {
+    const from = document.getElementById('step' + current);
+    const to   = document.getElementById('step' + next);
+    const dir  = next > current ? 1 : -1;
+
+    from.className = 'step ' + (dir > 0 ? 'hidden-left' : 'hidden-right');
+    to.className   = 'step active';
+    current = next;
+  }
+
+  /* ── Sélections step 1 ── */
+  function pick(el) {
+    document.querySelectorAll('#step1 .option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  /* ── Sélections step 2 ── */
+  function pickStyle(el) {
+    document.querySelectorAll('.style-thumb').forEach(t => t.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function pickColor2(el) {
+    document.querySelectorAll('#step2 .swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  /* ── Sélections step 3 ── */
+  function pickColor3(el) {
+    document.querySelectorAll('#step3 .swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  /* ── Fit écran ── */
+  const IPHONE_W = 393, IPHONE_H = 852;
+  function fitScreen() {
+    const pad = 24;
+    const scale = Math.min(
+      (window.innerHeight - pad * 2) / IPHONE_H,
+      (window.innerWidth  - pad * 2) / IPHONE_W,
+      1
+    );
+    const wrap   = document.querySelector('.iphone-wrap');
+    const iphone = document.querySelector('.iphone');
+    iphone.style.transform = `scale(${scale})`;
+    wrap.style.width  = (IPHONE_W * scale) + 'px';
+    wrap.style.height = (IPHONE_H * scale) + 'px';
+  }
+  fitScreen();
+  window.addEventListener('resize', fitScreen);
+</script>
+</body>
+</html>
