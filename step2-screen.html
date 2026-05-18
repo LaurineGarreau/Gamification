@@ -3,18 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crée ton avatar</title>
+  <title>Choisis ta coupe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
 
     body {
       background: #1c1c2e;
@@ -24,7 +20,6 @@
       font-family: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    /* ── Wrapper prend la taille après scale ── */
     .iphone-wrap {
       display: flex;
       align-items: center;
@@ -32,7 +27,6 @@
       flex-shrink: 0;
     }
 
-    /* ── iPhone 16 shell ── */
     .iphone {
       width: 393px;
       height: 852px;
@@ -50,12 +44,10 @@
         inset 0 0 0 1px rgba(255,255,255,0.08);
     }
 
-    /* ── Status bar ── */
+    /* Status bar */
     .status-bar {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 50px;
       padding: 14px 24px 0;
       display: flex;
@@ -63,21 +55,10 @@
       justify-content: space-between;
       z-index: 20;
     }
+    .status-time { font-size: 15px; font-weight: 700; color: #111; letter-spacing: -0.3px; }
+    .status-icons { display: flex; align-items: center; gap: 6px; }
 
-    .status-time {
-      font-size: 15px;
-      font-weight: 700;
-      color: #111;
-      letter-spacing: -0.3px;
-    }
-
-    .status-icons {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* ── Screen ── */
+    /* Screen */
     .screen {
       width: 100%;
       height: 100%;
@@ -87,23 +68,10 @@
       align-items: center;
     }
 
-    /* Progress dots */
-    .progress {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      margin-bottom: 7px;
-    }
-
-    .dot {
-      height: 8px;
-      border-radius: 4px;
-      background: #d8cfc9;
-    }
-    .dot.active {
-      width: 32px;
-      background: #e5197e;
-    }
+    /* Progress */
+    .progress { display: flex; align-items: center; gap: 7px; margin-bottom: 7px; }
+    .dot { height: 8px; border-radius: 4px; background: #d8cfc9; }
+    .dot.active { width: 32px; background: #e5197e; }
     .dot:not(.active) { width: 8px; }
 
     .step-label {
@@ -112,7 +80,7 @@
       letter-spacing: 1.8px;
       color: #e5197e;
       text-transform: uppercase;
-      margin-bottom: 38px;
+      margin-bottom: 20px;
     }
 
     /* Title */
@@ -121,93 +89,85 @@
       font-weight: 800;
       color: #111;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
       letter-spacing: -0.4px;
     }
 
-    .subtitle {
-      font-size: 15px;
-      font-weight: 400;
-      color: #9a8f8a;
-      text-align: center;
-      line-height: 1.5;
-      margin-bottom: 30px;
-      max-width: 250px;
+    /* Avatar */
+    .avatar-preview {
+      width: 170px;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 12px 28px rgba(0,0,0,0.18));
     }
 
-    /* ── Option cards ── */
-    .options {
+    /* Cards */
+    .card {
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-    }
-
-    .option {
       background: #fff;
       border-radius: 22px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 14px;
+    }
+
+    /* Style thumbnails grid */
+    .styles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .style-thumb {
+      aspect-ratio: 1;
+      border-radius: 14px;
+      background-image:
+        linear-gradient(45deg, #ddd 25%, transparent 25%),
+        linear-gradient(-45deg, #ddd 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ddd 75%),
+        linear-gradient(-45deg, transparent 75%, #ddd 75%);
+      background-size: 12px 12px;
+      background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+      background-color: #f0f0f0;
       cursor: pointer;
       border: 2.5px solid transparent;
-      transition: border-color 0.18s ease;
-      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+      transition: border-color 0.15s;
     }
 
-    .option.selected { border-color: #e5197e; }
+    .style-thumb.selected { border-color: #e5197e; }
 
-    /* Avatar wrapper — sprite sheet avatar.png (3×3 grid) */
-    .av {
-      width: 64px;
-      height: 64px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      overflow: hidden;
-      background-image: url('avatar.png');
-      background-size: 300% 300%;
-      background-repeat: no-repeat;
-    }
-    /* Homme : ligne 0, colonne 0 — cheveux bruns épars */
-    .av-homme { background-position: 0% 0%; }
-    /* Femme  : ligne 0, colonne 2 — chignon orange */
-    .av-femme  { background-position: 100% 0%; }
-    /* Neutre : ligne 1, colonne 1 — cheveux très sombres */
-    .av-neutre { background-position: 50% 50%; }
-
-    .option-label {
-      font-size: 18px;
-      font-weight: 700;
-      color: #111;
-      flex: 1;
-    }
-
-    /* Radio */
-    .radio {
-      width: 27px;
-      height: 27px;
-      border-radius: 50%;
-      border: 2px solid #c8bfba;
+    /* Color swatches */
+    .colors-row {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.15s ease;
+      gap: 10px;
     }
-    .option.selected .radio {
-      background: #e5197e;
-      border-color: #e5197e;
-    }
-    .radio svg { display: none; }
-    .option.selected .radio svg { display: block; }
 
-    /* ── Button ── */
-    .btn-wrap {
-      width: 100%;
-      margin-top: auto;
-      padding-top: 20px;
+    .swatch {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2.5px solid transparent;
+      transition: border-color 0.15s;
+      flex-shrink: 0;
     }
+
+    .swatch.selected {
+      border-color: #e5197e;
+      box-shadow: 0 0 0 3px #fff, 0 0 0 5.5px #e5197e;
+    }
+
+    /* Button */
+    .btn-wrap { width: 100%; margin-top: auto; }
 
     .btn-next {
       width: 100%;
@@ -220,13 +180,9 @@
       justify-content: center;
       gap: 10px;
       cursor: pointer;
-      box-shadow: 0 10px 28px rgba(229, 25, 126, 0.38);
+      box-shadow: 0 10px 28px rgba(229,25,126,0.35);
     }
-    .btn-next span {
-      font-size: 17px;
-      font-weight: 700;
-      color: #fff;
-    }
+    .btn-next span { font-size: 17px; font-weight: 700; color: #fff; font-family: 'Bricolage Grotesque', sans-serif; }
 
     /* Home bar */
     .home-bar {
@@ -245,24 +201,22 @@
 
 <div class="iphone-wrap">
 <div class="iphone">
+
   <!-- Status bar -->
   <div class="status-bar">
     <span class="status-time" id="clock">9:41</span>
     <div class="status-icons">
-      <!-- Réseau (barres signal) -->
       <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
-        <rect x="0"  y="8"  width="3" height="4"  rx="1" fill="#111"/>
+        <rect x="0"   y="8"   width="3" height="4"   rx="1" fill="#111"/>
         <rect x="4.5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/>
-        <rect x="9"  y="3"  width="3" height="9"  rx="1" fill="#111"/>
-        <rect x="13.5" y="0" width="3" height="12" rx="1" fill="#111"/>
+        <rect x="9"   y="3"   width="3" height="9"   rx="1" fill="#111"/>
+        <rect x="13.5" y="0"  width="3" height="12"  rx="1" fill="#111"/>
       </svg>
-      <!-- Wi-Fi -->
       <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
         <path d="M8 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#111"/>
         <path d="M3.5 6.5C4.9 5.1 6.35 4.4 8 4.4s3.1.7 4.5 2.1" stroke="#111" stroke-width="1.5" stroke-linecap="round" fill="none"/>
         <path d="M1 4C3 2 5.4 1 8 1s5 1 7 3" stroke="#111" stroke-width="1.5" stroke-linecap="round" fill="none"/>
       </svg>
-      <!-- Batterie -->
       <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
         <rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#111" stroke-width="1.1"/>
         <rect x="2" y="2" width="16" height="8" rx="2" fill="#111"/>
@@ -275,55 +229,46 @@
 
     <!-- Progress -->
     <div class="progress">
+      <div class="dot"></div>
       <div class="dot active"></div>
       <div class="dot"></div>
-      <div class="dot"></div>
     </div>
-    <p class="step-label">Étape 1 sur 3</p>
+    <p class="step-label">Étape 2 sur 3</p>
 
-    <h1 class="title">Crée ton avatar</h1>
-    <p class="subtitle">Personnalise ton profil au sein de ta collocation</p>
+    <h1 class="title">Choisis ta coupe !</h1>
 
-    <div class="options">
+    <!-- Avatar preview -->
+    <img class="avatar-preview" src="filleblonde.png" alt="avatar" />
 
-      <!-- ── HOMME ── -->
-      <div class="option" onclick="pick(this)">
-        <div class="av av-homme"></div>
-        <span class="option-label">Homme</span>
-        <div class="radio">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M2 7l4 4 6-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
+    <!-- Styles card -->
+    <div class="card">
+      <p class="card-title">Styles</p>
+      <div class="styles-grid">
+        <div class="style-thumb selected" onclick="pickStyle(this)"></div>
+        <div class="style-thumb" onclick="pickStyle(this)"></div>
+        <div class="style-thumb" onclick="pickStyle(this)"></div>
+        <div class="style-thumb" onclick="pickStyle(this)"></div>
+        <div class="style-thumb" onclick="pickStyle(this)"></div>
+        <div class="style-thumb" onclick="pickStyle(this)"></div>
       </div>
+    </div>
 
-      <!-- ── FEMME (sélectionnée) ── -->
-      <div class="option selected" onclick="pick(this)">
-        <div class="av av-femme"></div>
-        <span class="option-label">Femme</span>
-        <div class="radio">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M2 7l4 4 6-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
+    <!-- Couleurs card -->
+    <div class="card">
+      <p class="card-title">Couleurs</p>
+      <div class="colors-row">
+        <div class="swatch selected" style="background:#f0d030" onclick="pickColor(this)"></div>
+        <div class="swatch" style="background:#c0bab4" onclick="pickColor(this)"></div>
+        <div class="swatch" style="background:#c88c18" onclick="pickColor(this)"></div>
+        <div class="swatch" style="background:#4a2830" onclick="pickColor(this)"></div>
+        <div class="swatch" style="background:#a8a4a0" onclick="pickColor(this)"></div>
+        <div class="swatch" style="background:#d0ccca" onclick="pickColor(this)"></div>
       </div>
-
-      <!-- ── NEUTRE ── -->
-      <div class="option" onclick="pick(this)">
-        <div class="av av-neutre"></div>
-        <span class="option-label">Neutre</span>
-        <div class="radio">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M2 7l4 4 6-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
-
-    </div><!-- /options -->
+    </div>
 
     <!-- Button -->
     <div class="btn-wrap">
-      <button class="btn-next" onclick="location.href='step2-screen.html'">
+      <button class="btn-next" onclick="location.href='step3-screen.html'">
         <span>Suivant</span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
           stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -332,7 +277,7 @@
       </button>
     </div>
 
-  </div><!-- /screen -->
+  </div>
 
   <div class="home-bar"></div>
 </div>
@@ -341,21 +286,24 @@
 <script>
   function updateClock() {
     const now = new Date();
-    const h = now.getHours().toString().padStart(2, '0');
-    const m = now.getMinutes().toString().padStart(2, '0');
+    const h = now.getHours().toString().padStart(2,'0');
+    const m = now.getMinutes().toString().padStart(2,'0');
     document.getElementById('clock').textContent = h + ':' + m;
   }
   updateClock();
   setInterval(updateClock, 10000);
 
-  function pick(el) {
-    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  function pickStyle(el) {
+    document.querySelectorAll('.style-thumb').forEach(t => t.classList.remove('selected'));
     el.classList.add('selected');
   }
 
-  const IPHONE_W = 393;
-  const IPHONE_H = 852;
+  function pickColor(el) {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+  }
 
+  const IPHONE_W = 393, IPHONE_H = 852;
   function fitScreen() {
     const pad = 24;
     const scale = Math.min(
@@ -369,7 +317,6 @@
     wrap.style.width  = (IPHONE_W * scale) + 'px';
     wrap.style.height = (IPHONE_H * scale) + 'px';
   }
-
   fitScreen();
   window.addEventListener('resize', fitScreen);
 </script>
