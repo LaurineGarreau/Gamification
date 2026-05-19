@@ -379,7 +379,7 @@
   </div>
 
   <!-- Notification iOS -->
-  <div class="ios-notif" id="notif" onclick="goTo(6);this.classList.remove('show')">
+  <div class="ios-notif" id="notif" onclick="goTo(5);this.classList.remove('show')">
     <div class="notif-icon-wrap">🎲</div>
     <div>
       <div class="notif-app-name">TÂCHES COLOC</div>
@@ -634,28 +634,29 @@
         <circle cx="196" cy="630" r="38" fill="#0f0f0f"/>
       </svg>
 
+      <!-- Message fin de semaine -->
+      <div id="all-done-msg" style="display:none;position:absolute;top:240px;left:50%;transform:translateX(-50%);flex-direction:column;align-items:center;gap:16px;z-index:5;text-align:center;width:80%;">
+        <span style="font-size:48px;">🎉</span>
+        <p style="color:#fff;font-size:20px;font-weight:800;line-height:1.3;">C'est fini pour<br>aujourd'hui !</p>
+        <p style="color:rgba(255,255,255,0.6);font-size:14px;font-weight:500;">À la semaine prochaine 👋</p>
+      </div>
+
       <!-- Profils cliquables -->
-      <div style="position:absolute;top:200px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:5;">
+      <div id="persons-container" style="position:absolute;top:240px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:5;">
 
-        <div onclick="selectPerson(0)" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;">
-          <div style="width:96px;height:96px;border-radius:50%;background:#3b4fce;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,0.45);">
-            <img src="FEMME.png" style="width:80px;height:80px;object-fit:contain;"/>
-          </div>
-          <span style="color:#fff;font-size:12px;font-weight:700;background:rgba(255,255,255,0.12);padding:3px 10px;border-radius:10px;">Lisa</span>
+        <div id="person-card-0" onclick="selectPerson(0)" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <img src="pdp Jean.png" style="width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 3px 14px rgba(0,0,0,0.45);"/>
+          <span style="color:#fff;font-size:13px;font-weight:700;">Jean</span>
         </div>
 
-        <div onclick="selectPerson(1)" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;">
-          <div style="width:96px;height:96px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,0.45);">
-            <img src="mec.png" style="width:80px;height:80px;object-fit:contain;"/>
-          </div>
-          <span style="color:#fff;font-size:12px;font-weight:700;background:rgba(255,255,255,0.12);padding:3px 10px;border-radius:10px;">Paul</span>
+        <div id="person-card-1" onclick="selectPerson(1)" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <img src="pdp Lisa.png" style="width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 3px 14px rgba(0,0,0,0.45);"/>
+          <span style="color:#fff;font-size:13px;font-weight:700;">Lisa</span>
         </div>
 
-        <div onclick="selectPerson(2)" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;">
-          <div style="width:96px;height:96px;border-radius:50%;background:#7f1d1d;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,0.45);">
-            <img src="Photo de profilmarron.png" style="width:96px;height:96px;object-fit:cover;border-radius:50%;"/>
-          </div>
-          <span style="color:#fff;font-size:12px;font-weight:700;background:rgba(255,255,255,0.12);padding:3px 10px;border-radius:10px;">Maxime</span>
+        <div id="person-card-2" onclick="selectPerson(2)" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <img src="pdpmaxime.png" style="width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 3px 14px rgba(0,0,0,0.45);"/>
+          <span style="color:#fff;font-size:13px;font-weight:700;">Maxime</span>
         </div>
 
       </div>
@@ -869,9 +870,9 @@
 
   /* ── Personnes ── */
   const PERSONS = [
-    { name: 'Lisa',  img: 'FEMME.png'                 },
-    { name: 'Paul', img: 'mec.png'                   },
-    { name: 'Maxime',  img: 'Photo de profilmarron.png' }
+    { name: 'Jean',   img: 'pdp Jean.png'  },
+    { name: 'Lisa',   img: 'pdp Lisa.png'  },
+    { name: 'Maxime', img: 'pdpmaxime.png' }
   ];
   let personIdx = 0;
 
@@ -944,6 +945,18 @@
 
   function closeSpinResult() {
     document.getElementById('spin-result').style.display = 'none';
+    // Cacher la personne qui vient de tirer
+    const card = document.getElementById('person-card-' + personIdx);
+    if (card) card.style.display = 'none';
+    // Vérifier s'il reste des personnes
+    const remaining = PERSONS.filter((_, i) => {
+      const c = document.getElementById('person-card-' + i);
+      return c && c.style.display !== 'none';
+    });
+    if (remaining.length === 0) {
+      document.getElementById('all-done-msg').style.display = 'flex';
+      document.getElementById('persons-container').style.display = 'none';
+    }
     nextPerson();
     goTo(5);
   }
