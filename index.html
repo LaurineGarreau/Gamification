@@ -28,7 +28,7 @@
       height: 852px;
       transform-origin: center center;
       flex-shrink: 0;
-      background: #f4ebe3;
+      background: #ffffff;
       border-radius: 56px;
       position: relative;
       overflow: hidden;
@@ -177,11 +177,11 @@
     .btn-wrap { width: 100%; margin-top: auto; padding-top: 16px; }
     .btn-next {
       width: 100%; height: 60px;
-      background: #e5197e; border: none; border-radius: 20px;
+      background: #FFC7EA; border: none; border-radius: 18px;
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      cursor: pointer; box-shadow: 0 10px 28px rgba(229,25,126,0.35);
+      cursor: pointer;
     }
-    .btn-next span { font-size: 17px; font-weight: 700; color: #fff; font-family: inherit; }
+    .btn-next span { font-size: 17px; font-weight: 700; color: #D3007E; font-family: inherit; }
 
     /* ── Home bar ── */
     .home-bar {
@@ -190,113 +190,166 @@
     }
 
     /* ══════════════ ÉCRAN HOME ══════════════ */
-    #step4 { padding: 58px 0 0; justify-content: flex-start; }
+    #step4 { padding: 58px 0 0; justify-content: flex-start; gap: 0; }
 
-    .home-header {
-      width: 100%; padding: 0 22px;
+    /* Header */
+    .h-header {
+      width: 100%; padding: 10px 22px 18px;
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 22px;
     }
-    .home-title { font-size: 26px; font-weight: 800; color: #111; }
-
-    .avatar-circle {
-      width: 54px; height: 54px; border-radius: 50%;
-      background: #e5197e; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
+    .h-greeting { font-size: 30px; font-weight: 800; color: #111; letter-spacing: -0.5px; }
+    .h-avatar {
+      width: 58px; height: 58px; border-radius: 50%;
+      background: #e5197e; overflow: hidden; flex-shrink: 0;
     }
-    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .h-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
     /* Tâches planifiées */
-    .section-header {
-      width: 100%; padding: 0 22px;
+    .h-section-row {
+      width: 100%; padding: 0 22px 12px;
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 12px;
     }
-    .section-title { font-size: 17px; font-weight: 800; color: #111; }
-    .tout-voir {
-      font-size: 13px; font-weight: 600; color: #111;
-      background: #fff; border: none; border-radius: 20px;
-      padding: 6px 12px; cursor: pointer;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.1);
-      font-family: inherit;
+    .h-section-title { font-size: 19px; font-weight: 800; color: #111; }
+    .h-tout-voir {
+      font-size: 13px; font-weight: 600; color: #111; background: #fff;
+      border: 1.5px solid #e8e0d8; border-radius: 20px; padding: 7px 13px;
+      cursor: pointer; font-family: inherit; letter-spacing: 0.1px;
     }
 
     /* Day row */
-    .day-row {
+    .h-day-row {
       width: 100%; padding: 0 22px;
-      display: flex; align-items: center; gap: 8px;
-      overflow-x: auto; scrollbar-width: none;
-      margin-bottom: 22px;
+      display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
     }
-    .day-row::-webkit-scrollbar { display: none; }
+    .h-day-row::-webkit-scrollbar { display: none; }
 
-    .day-item {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 4px; flex-shrink: 0;
+    /* Carte jour */
+    .h-day-item {
+      width: 46px; height: 60px; border-radius: 16px;
+      background: #fff; flex-shrink: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: space-between;
+      padding: 9px 0 9px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.08);
     }
-    .day-label {
-      font-size: 12px; font-weight: 700; color: #888;
-    }
-    .day-bubble {
-      width: 38px; height: 38px; border-radius: 50%;
-      background: #fff; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-    }
-    .day-item.today .day-bubble { background: #f5d030; }
-    .day-item.today .day-label  { color: #111; }
+    .h-day-item.today { background: #FFFAEB; }
 
-    /* Week card */
-    .week-card {
-      width: calc(100% - 44px); margin: 0 22px;
+    /* Horloge (cercle) */
+    .h-day-item.clock {
+      justify-content: center; padding: 0;
+      background: #e8f5e9;
+    }
+
+    .h-day-label { font-size: 13px; font-weight: 700; color: #333; line-height: 1; }
+
+    /* Cercle coche */
+    .h-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .h-check.pink { background: #fce4ef; }
+    .h-check.blue { background: #FACE2C; }
+
+    /* Flexible gap */
+    .h-gap { height: 20px; flex-shrink: 0; }
+
+    /* Cette semaine */
+    .h-week-label {
+      width: 100%; padding: 0 22px 10px;
+      font-size: 19px; font-weight: 800; color: #111;
+    }
+
+    /* Card */
+    .h-card {
+      width: calc(100% - 40px); margin: 0 20px 16px;
       background: #fff; border-radius: 22px;
       overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-      margin-bottom: 14px;
     }
-    .week-card-img {
+    .h-card-img {
+      min-height: 210px;
       display: flex; align-items: center; justify-content: center;
-      padding: 18px 0 10px; background: #fff;
+      padding: 18px 0 10px;
     }
-    .week-card-img img { width: 160px; object-fit: contain; }
+    .h-card-img img { width: 168px; object-fit: contain; }
 
-    .week-stats {
-      display: flex; border-top: 1px solid #f0ebe5;
-      padding: 14px 0;
+    .h-stats {
+      display: flex; border-top: 1.5px solid #f0ebe5; padding: 14px 0;
     }
-    .stat {
+    .h-stat {
       flex: 1; display: flex; flex-direction: column;
-      align-items: center; gap: 3px;
-      border-right: 1px solid #f0ebe5;
+      align-items: center; gap: 2px; border-right: 1.5px solid #f0ebe5;
     }
-    .stat:last-child { border-right: none; }
-    .stat-val { font-size: 20px; font-weight: 800; color: #111; }
-    .stat-label { font-size: 11px; color: #9a8f8a; font-weight: 500; text-align: center; }
+    .h-stat:last-child { border-right: none; }
+    .h-stat-val  { font-size: 22px; font-weight: 800; color: #111; }
+    .h-stat-lbl  { font-size: 11px; color: #9a8f8a; font-weight: 500; text-align: center; line-height: 1.3; }
 
     /* Valider button */
-    .btn-valider {
-      width: calc(100% - 44px); margin: 0 22px;
-      height: 58px; background: #fce4ef;
-      border: none; border-radius: 50px;
+    .h-btn-valider {
+      position: absolute; bottom: 178px; left: 20px; right: 20px;
+      height: 58px; background: #FFC7EA; border: none; border-radius: 18px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
       cursor: pointer; font-family: inherit;
     }
-    .btn-valider span { font-size: 17px; font-weight: 700; color: #e5197e; }
+    .h-btn-valider span { font-size: 17px; font-weight: 700; color: #D3007E; }
 
     /* Bottom nav */
-    .bottom-nav {
-      position: absolute; bottom: 20px; left: 16px; right: 16px;
-      height: 64px; background: #fff;
-      border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      display: flex; align-items: center; justify-content: space-around;
-      padding: 0 8px;
+    .h-nav {
+      position: absolute; bottom: 22px; left: 28px; right: 28px;
+      height: 82px; background: #F5F5F5;
+      border-radius: 18px;
+      display: flex; align-items: center;
+      justify-content: space-around;
+      padding: 0 10px 14px;
     }
-    .nav-item {
-      flex: 1; height: 46px; border-radius: 18px;
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 2px; cursor: pointer;
+    .h-nav-item {
+      flex: 1; height: 50px; border-radius: 18px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 3px; cursor: pointer;
     }
-    .nav-item.active { background: #fce4ef; }
-    .nav-item svg { width: 22px; height: 22px; }
-    .nav-label { font-size: 11px; font-weight: 700; color: #e5197e; }
+    .h-nav-item.active { background: #FFC7EA; flex-direction: row; gap: 6px; padding: 0 14px; }
+    .h-nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .h-nav-lbl { font-size: 13px; font-weight: 700; color: #D3007E; }
+
+    /* ══════════════ NOTIFICATION iOS ══════════════ */
+    .ios-notif {
+      position: absolute; top: 56px; left: 14px; right: 14px;
+      background: rgba(248,248,252,0.97);
+      border-radius: 16px; padding: 12px 14px;
+      display: flex; align-items: center; gap: 12px;
+      z-index: 200; cursor: pointer;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      transform: translateY(-130px);
+      transition: transform 0.45s cubic-bezier(0.34,1.4,0.64,1);
+      pointer-events: none;
+    }
+    .ios-notif.show { transform: translateY(0); pointer-events: auto; }
+    .notif-icon-wrap {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: #FFC7EA; display: flex; align-items: center;
+      justify-content: center; font-size: 22px; flex-shrink: 0;
+    }
+    .notif-app-name { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 2px; letter-spacing: 0.3px; }
+    .notif-text { font-size: 13px; font-weight: 500; color: #111; line-height: 1.35; }
+
+    /* ══════════════ STEP 5 – DARK ══════════════ */
+    #step5 { background: #0f0f0f; padding: 0; justify-content: flex-start; }
+    .s5-status {
+      position: absolute; top: 0; left: 0; right: 0; height: 50px;
+      padding: 14px 24px 0; display: flex; align-items: center;
+      justify-content: space-between; z-index: 31;
+    }
+    .s5-content { position: absolute; top: 56px; left: 0; right: 0; padding: 18px 24px 0; z-index: 2; }
+    .s5-title { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.4px; }
+    .s5-sub { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.45; }
+
+    /* ══════════════ STEP 6 – PINK WHEEL ══════════════ */
+    #step6 { background: #fff; padding: 58px 0 0; justify-content: flex-start; }
+    .s6-top { width: 100%; padding: 14px 24px 0; display: flex; flex-direction: column; align-items: center; }
+    .s6-title { font-size: 27px; font-weight: 800; color: #111; letter-spacing: -0.4px; text-align: center; }
+    .s6-sub { font-size: 14px; color: #666; margin-top: 8px; text-align: center; line-height: 1.4; max-width: 290px; }
+    .s6-badge { margin-top: 14px; background: #f0f0f0; border-radius: 20px; padding: 8px 18px; font-size: 14px; font-weight: 600; color: #333; }
+    .s6-arrow { font-size: 15px; color: #333; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -324,6 +377,15 @@
         <rect x="2"   y="2"   width="16" height="8"  rx="2"   fill="#111"/>
         <path d="M23 4v4" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
+    </div>
+  </div>
+
+  <!-- Notification iOS -->
+  <div class="ios-notif" id="notif" onclick="goTo(6);this.classList.remove('show')">
+    <div class="notif-icon-wrap">🎲</div>
+    <div>
+      <div class="notif-app-name">TÂCHES COLOC</div>
+      <div class="notif-text">C'est l'heure du tirage au sort de la semaine !</div>
     </div>
   </div>
 
@@ -374,7 +436,7 @@
       <div class="btn-wrap">
         <button class="btn-next" onclick="goTo(2)">
           <span>Suivant</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D3007E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
@@ -419,7 +481,7 @@
       <div class="btn-wrap">
         <button class="btn-next" onclick="goTo(3)">
           <span>Suivant</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D3007E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
@@ -450,7 +512,7 @@
       <div class="btn-wrap">
         <button class="btn-next" onclick="goTo(4)">
           <span>C'est parti !</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D3007E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
@@ -459,117 +521,220 @@
     <div class="step hidden-right" id="step4">
 
       <!-- Header -->
-      <div class="home-header">
-        <h1 class="home-title">Hey Léa</h1>
-        <div class="avatar-circle">
-          <img src="FEMME.png" alt="avatar" />
-        </div>
+      <div class="h-header">
+        <h1 class="h-greeting">Hey Léa</h1>
+        <div class="h-avatar"><img src="FEMME.png" alt="avatar"/></div>
       </div>
 
       <!-- Tâches planifiées -->
-      <div class="section-header">
-        <span class="section-title">Taches planifiées</span>
-        <button class="tout-voir">Tout voir →</button>
+      <div class="h-section-row">
+        <span class="h-section-title">Taches planifiées</span>
+        <button class="h-tout-voir">Tout voir →</button>
       </div>
 
       <!-- Day row -->
-      <div class="day-row">
-        <div class="day-item">
-          <span class="day-label">&nbsp;</span>
-          <div class="day-bubble">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      <div class="h-day-row">
+
+        <!-- Horloge -->
+        <div class="h-day-item clock">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </div>
+
+        <!-- Lundi (today) — fond jaune, coche bleue -->
+        <div class="h-day-item today">
+          <span class="h-day-label">Lu</span>
+          <div class="h-check blue">
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </div>
-        <div class="day-item today">
-          <span class="day-label">Lu</span>
-          <div class="day-bubble">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#3b7dd8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="day-item">
-          <span class="day-label">Ma</span>
-          <div class="day-bubble">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="day-item">
-          <span class="day-label">Me</span>
-          <div class="day-bubble">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="day-item">
-          <span class="day-label">Je</span>
-          <div class="day-bubble">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="day-item">
-          <span class="day-label">Ve</span>
-          <div class="day-bubble">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="day-item">
-          <span class="day-label">Sa</span>
-          <div class="day-bubble">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="day-item">
-          <span class="day-label">Di</span>
-          <div class="day-bubble">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
+
+        <!-- Ma → Di — fond blanc, coche rose -->
+        <div class="h-day-item"><span class="h-day-label">Ma</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="h-day-item"><span class="h-day-label">Me</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="h-day-item"><span class="h-day-label">Je</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="h-day-item"><span class="h-day-label">Ve</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="h-day-item"><span class="h-day-label">Sa</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="h-day-item"><span class="h-day-label">Di</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+
       </div>
+
+      <div class="h-gap"></div>
 
       <!-- Cette semaine -->
-      <div class="section-header" style="margin-bottom:10px">
-        <span class="section-title">Cette semaine</span>
-      </div>
+      <div class="h-week-label">Cette semaine</div>
 
-      <!-- Week card -->
-      <div class="week-card">
-        <div class="week-card-img">
-          <img src="balai.png" alt="personnage" />
+      <!-- Card -->
+      <div class="h-card">
+        <div class="h-card-img">
+          <img src="balai.png" alt="personnage"/>
         </div>
-        <div class="week-stats">
-          <div class="stat">
-            <span class="stat-val">6</span>
-            <span class="stat-label">Jours restants</span>
-          </div>
-          <div class="stat">
-            <span class="stat-val">0</span>
-            <span class="stat-label">Taches</span>
-          </div>
-          <div class="stat">
-            <span class="stat-val">0</span>
-            <span class="stat-label">Pt gagné</span>
-          </div>
+        <div class="h-stats">
+          <div class="h-stat"><span class="h-stat-val">6</span><span class="h-stat-lbl">Jours restants</span></div>
+          <div class="h-stat"><span class="h-stat-val">0</span><span class="h-stat-lbl">Taches</span></div>
+          <div class="h-stat"><span class="h-stat-val">0</span><span class="h-stat-lbl">Pt gagné</span></div>
         </div>
       </div>
 
       <!-- Valider -->
-      <button class="btn-valider">
+      <button class="h-btn-valider">
         <span>Valider ma tâche</span>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
 
       <!-- Bottom nav -->
-      <div class="bottom-nav">
-        <div class="nav-item active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
-          <span class="nav-label">Accueil</span>
+      <div class="h-nav">
+        <div class="h-nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D3007E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+          <span class="h-nav-lbl">Accueil</span>
         </div>
-        <div class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <div class="h-nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
         </div>
-        <div class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
+        <div class="h-nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
         </div>
-        <div class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <div class="h-nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════ ÉTAPE 5 – C'EST LE TOUR DE QUI ══════════════ -->
+    <div class="step hidden-right" id="step5">
+
+      <!-- Status bar blanc sur noir -->
+      <div class="s5-status">
+        <span style="color:#fff;font-size:15px;font-weight:700;" id="clock5">9:41</span>
+        <div style="display:flex;gap:6px;">
+          <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="8" width="3" height="4" rx="1" fill="#fff"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1" fill="#fff"/><rect x="9" y="3" width="3" height="9" rx="1" fill="#fff"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#fff"/></svg>
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="#fff"/><path d="M3.5 6.5C4.9 5.1 6.35 4.4 8 4.4s3.1.7 4.5 2.1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M1 4C3 2 5.4 1 8 1s5 1 7 3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#fff" stroke-width="1.1"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#fff"/><path d="M23 4v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <!-- Titre -->
+      <div class="s5-content">
+        <h1 class="s5-title">C'est le tour<br>de qui ?</h1>
+        <p class="s5-sub">Tournez la roue pour découvrir vos missions de la semaine. Que le sort vous soit favorable !</p>
+      </div>
+
+      <!-- Roue sombre (SVG full screen) -->
+      <svg viewBox="0 0 393 852" style="position:absolute;inset:0;width:100%;height:100%;">
+        <path d="M 196 630 L 196 330 A 300 300 0 0 1 456 480 Z" fill="#1c1c1e"/>
+        <path d="M 196 630 L 456 480 A 300 300 0 0 1 456 780 Z" fill="#242426"/>
+        <path d="M 196 630 L 456 780 A 300 300 0 0 1 196 930 Z" fill="#1c1c1e"/>
+        <path d="M 196 630 L 196 930 A 300 300 0 0 1 -64 780 Z" fill="#242426"/>
+        <path d="M 196 630 L -64 780 A 300 300 0 0 1 -64 480 Z" fill="#1c1c1e"/>
+        <path d="M 196 630 L -64 480 A 300 300 0 0 1 196 330 Z" fill="#242426"/>
+        <line x1="196" y1="630" x2="196" y2="330"  stroke="#0f0f0f" stroke-width="3"/>
+        <line x1="196" y1="630" x2="456" y2="480"  stroke="#0f0f0f" stroke-width="3"/>
+        <line x1="196" y1="630" x2="456" y2="780"  stroke="#0f0f0f" stroke-width="3"/>
+        <line x1="196" y1="630" x2="196" y2="930"  stroke="#0f0f0f" stroke-width="3"/>
+        <line x1="196" y1="630" x2="-64" y2="780"  stroke="#0f0f0f" stroke-width="3"/>
+        <line x1="196" y1="630" x2="-64" y2="480"  stroke="#0f0f0f" stroke-width="3"/>
+        <circle cx="196" cy="630" r="38" fill="#0f0f0f"/>
+      </svg>
+
+      <!-- Profils cliquables -->
+      <div style="position:absolute;top:200px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:5;">
+
+        <div onclick="selectPerson(0)" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;">
+          <div style="width:96px;height:96px;border-radius:50%;background:#3b4fce;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,0.45);">
+            <img src="FEMME.png" style="width:80px;height:80px;object-fit:contain;"/>
+          </div>
+          <span style="color:#fff;font-size:12px;font-weight:700;background:rgba(255,255,255,0.12);padding:3px 10px;border-radius:10px;">Lisa</span>
+        </div>
+
+        <div onclick="selectPerson(1)" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;">
+          <div style="width:96px;height:96px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,0.45);">
+            <img src="mec.png" style="width:80px;height:80px;object-fit:contain;"/>
+          </div>
+          <span style="color:#fff;font-size:12px;font-weight:700;background:rgba(255,255,255,0.12);padding:3px 10px;border-radius:10px;">Paul</span>
+        </div>
+
+        <div onclick="selectPerson(2)" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;">
+          <div style="width:96px;height:96px;border-radius:50%;background:#7f1d1d;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,0.45);">
+            <img src="Photo de profilmarron.png" style="width:96px;height:96px;object-fit:cover;border-radius:50%;"/>
+          </div>
+          <span style="color:#fff;font-size:12px;font-weight:700;background:rgba(255,255,255,0.12);padding:3px 10px;border-radius:10px;">Maxime</span>
+        </div>
+
+      </div>
+      <!-- Prochain tireur -->
+      <span id="next-person-name" style="display:none;">Maxime</span>
+
+
+
+    </div>
+
+    <!-- ══════════════ ÉTAPE 6 – ROUE ROSE ══════════════ -->
+    <div class="step hidden-right" id="step6">
+
+      <!-- Contenu haut -->
+      <div class="s6-top">
+        <h1 class="s6-title">C'est l'heure du tirage !</h1>
+        <p class="s6-sub">Appuyez sur le personnage pour modifier qui reçoit quelle tâche !</p>
+        <div class="s6-badge">2 taches / personne</div>
+        <div class="s6-arrow">▼</div>
+      </div>
+
+      <!-- Avatar au sommet de la roue -->
+      <img id="wheel-avatar" src="Photo de profilmarron.png" style="position:absolute;top:296px;left:50%;transform:translateX(-50%);width:112px;height:112px;border-radius:50%;z-index:5;box-shadow:0 6px 20px rgba(0,0,0,0.3);"/>
+
+      <!-- Roue rose (SVG full screen) -->
+      <svg viewBox="0 0 393 852" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;">
+
+        <!-- ══ Tout ce qui tourne ══ -->
+        <g id="wheel-spin" style="transform-origin:196px 640px; transition:transform 4.5s cubic-bezier(0.05,0.85,0.15,1);">
+          <!-- Secteurs -->
+          <path d="M 196 640 L 196 358 A 282 282 0 0 1 440 499 Z" fill="#e8197e"/>
+          <path d="M 196 640 L 440 499 A 282 282 0 0 1 440 781 Z" fill="#f06aad"/>
+          <path d="M 196 640 L 440 781 A 282 282 0 0 1 196 922 Z" fill="#e8197e"/>
+          <path d="M 196 640 L 196 922 A 282 282 0 0 1 -48 781 Z" fill="#f06aad"/>
+          <path d="M 196 640 L -48 781 A 282 282 0 0 1 -48 499 Z" fill="#e8197e"/>
+          <path d="M 196 640 L -48 499 A 282 282 0 0 1 196 358 Z" fill="#f06aad"/>
+          <!-- Séparateurs -->
+          <line x1="196" y1="640" x2="196" y2="358"  stroke="#8b0042" stroke-width="2.5"/>
+          <line x1="196" y1="640" x2="440" y2="499"  stroke="#8b0042" stroke-width="2.5"/>
+          <line x1="196" y1="640" x2="440" y2="781"  stroke="#8b0042" stroke-width="2.5"/>
+          <line x1="196" y1="640" x2="196" y2="922"  stroke="#8b0042" stroke-width="2.5"/>
+          <line x1="196" y1="640" x2="-48" y2="781"  stroke="#8b0042" stroke-width="2.5"/>
+          <line x1="196" y1="640" x2="-48" y2="499"  stroke="#8b0042" stroke-width="2.5"/>
+          <!-- Textes -->
+          <text transform="rotate(30,280,500)" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Bricolage Grotesque,sans-serif">
+            <tspan x="280" y="495">Sortir les</tspan><tspan x="280" dy="16">poubelles</tspan>
+          </text>
+          <text transform="rotate(-30,112,500)" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Bricolage Grotesque,sans-serif">
+            <tspan x="112" y="495">Nettoyer les</tspan><tspan x="112" dy="16">toilettes</tspan>
+          </text>
+          <text transform="rotate(90,375,640)" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Bricolage Grotesque,sans-serif">
+            <tspan x="375" y="635">Nettoyer</tspan><tspan x="375" dy="16">la cuisine</tspan>
+          </text>
+          <text transform="rotate(-90,17,640)" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Bricolage Grotesque,sans-serif">
+            <tspan x="17" y="635">Passer</tspan><tspan x="17" dy="16">l'aspirateur</tspan>
+          </text>
+          <text transform="rotate(60,280,778)" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Bricolage Grotesque,sans-serif">
+            <tspan x="280" y="773">Lancer une</tspan><tspan x="280" dy="16">machine</tspan>
+          </text>
+          <text transform="rotate(-60,112,778)" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="Bricolage Grotesque,sans-serif">
+            <tspan x="112" y="773">Nettoyer</tspan><tspan x="112" dy="16">les WC</tspan>
+          </text>
+        </g>
+
+        <!-- ══ Centre fixe ══ -->
+        <circle cx="196" cy="640" r="54" fill="white" onclick="spinWheel()" style="cursor:pointer;"/>
+        <text x="196" y="645" text-anchor="middle" fill="#5b21b6" font-size="17" font-weight="800"
+          font-family="Bricolage Grotesque,sans-serif" onclick="spinWheel()" style="cursor:pointer;">Jouer</text>
+      </svg>
+
+      <!-- ══ Popup résultat ══ -->
+      <div id="spin-result" style="display:none;position:absolute;inset:0;z-index:50;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+        <div style="background:#fff;border-radius:26px;padding:32px 28px;margin:28px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.25);width:calc(100% - 56px);">
+          <div style="font-size:46px;margin-bottom:14px;">🎉</div>
+          <p style="font-size:14px;font-weight:600;color:#888;margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase;">Tâche tirée au sort</p>
+          <p id="spin-task" style="font-size:22px;font-weight:800;color:#D3007E;margin-bottom:24px;line-height:1.25;">—</p>
+          <button onclick="closeSpinResult()" style="background:#FFC7EA;border:none;border-radius:14px;padding:14px 36px;font-size:16px;font-weight:700;color:#D3007E;cursor:pointer;font-family:inherit;width:100%;">Super ! 🎊</button>
         </div>
       </div>
 
@@ -585,12 +750,84 @@
   /* ── Horloge ── */
   function updateClock() {
     const now = new Date();
-    document.getElementById('clock').textContent =
-      now.getHours().toString().padStart(2,'0') + ':' +
-      now.getMinutes().toString().padStart(2,'0');
+    const t = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    document.getElementById('clock').textContent = t;
+    document.getElementById('clock5').textContent = t;
   }
   updateClock();
   setInterval(updateClock, 10000);
+
+  /* ── Personnes ── */
+  const PERSONS = [
+    { name: 'Lisa',  img: 'FEMME.png'                 },
+    { name: 'Paul', img: 'mec.png'                   },
+    { name: 'Maxime',  img: 'Photo de profilmarron.png' }
+  ];
+  let personIdx = 0;
+
+  function selectPerson(idx) {
+    personIdx = idx;
+    document.getElementById('wheel-avatar').src = PERSONS[idx].img;
+    document.getElementById('next-person-name').textContent = PERSONS[idx].name;
+    goTo(6);
+  }
+
+  function nextPerson() {
+    personIdx = (personIdx + 1) % PERSONS.length;
+    const p = PERSONS[personIdx];
+    document.getElementById('wheel-avatar').src = p.img;
+    document.getElementById('next-person-name').textContent = p.name;
+  }
+
+  /* ── Roue : spin ── */
+  let wheelAngle = 0;
+  let isSpinning = false;
+
+  const WHEEL_TASKS = [
+    "Sortir les poubelles",
+    "Nettoyer la cuisine",
+    "Lancer une machine",
+    "Nettoyer les WC",
+    "Passer l'aspirateur",
+    "Nettoyer les toilettes"
+  ];
+
+  function spinWheel() {
+    if (isSpinning) return;
+    isSpinning = true;
+
+    const group = document.getElementById('wheel-spin');
+    const spins = 6 + Math.floor(Math.random() * 4);
+    const extra = Math.random() * 360;
+    wheelAngle += spins * 360 + extra;
+
+    group.style.transform = `rotate(${wheelAngle}deg)`;
+
+    setTimeout(() => {
+      isSpinning = false;
+      // Calcul du secteur au sommet (pointeur à 12h)
+      const norm  = ((wheelAngle % 360) + 360) % 360;
+      const idx   = Math.floor(((360 - norm) % 360) / 60) % 6;
+      document.getElementById('spin-task').textContent = WHEEL_TASKS[idx];
+      const popup = document.getElementById('spin-result');
+      popup.style.display = 'flex';
+    }, 4600);
+  }
+
+  function closeSpinResult() {
+    document.getElementById('spin-result').style.display = 'none';
+    nextPerson();
+    goTo(5);
+  }
+
+  /* ── Notification après 6s sur l'écran d'accueil ── */
+  setTimeout(() => {
+    if (current === 4) {
+      const notif = document.getElementById('notif');
+      notif.classList.add('show');
+      setTimeout(() => notif.classList.remove('show'), 5000);
+    }
+  }, 6000);
 
   /* ── Navigation ── */
   let current = 1;
