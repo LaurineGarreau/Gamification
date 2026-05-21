@@ -591,7 +591,7 @@
         <div class="h-nav-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
         </div>
-        <div class="h-nav-item">
+        <div class="h-nav-item" onclick="goTo(8)">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         </div>
       </div>
@@ -865,8 +865,301 @@
         <div class="h-nav-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
         </div>
-        <div class="h-nav-item">
+        <div class="h-nav-item" onclick="goTo(8)">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════ ÉTAPE 8 – MON PROFIL ══════════════ -->
+    <div class="step hidden-right" id="step8" style="background:#FAF9F7; padding:58px 0 0; justify-content:flex-start;">
+
+      <!-- Scrollable content -->
+      <div style="width:100%; height:calc(100% - 104px); overflow-y:auto; scrollbar-width:none;">
+        <style>#step8 ::-webkit-scrollbar { display:none; }</style>
+
+        <!-- Page header -->
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 22px 10px;">
+          <span style="font-size:13px; font-weight:800; letter-spacing:1.5px; color:#111; text-transform:uppercase;">Mon Profil</span>
+          <div style="width:36px; height:36px; background:#F0EEF8; border-radius:12px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+        </div>
+
+        <!-- Hero lavender -->
+        <div style="background:#EAE4F5; margin:0 0 0; padding:18px 22px 24px; display:flex; flex-direction:column; align-items:center;">
+          <!-- Avatar -->
+          <div style="position:relative; margin-bottom:12px;">
+            <div style="width:90px; height:90px; border-radius:50%; overflow:hidden; border:3px solid white; box-shadow:0 4px 16px rgba(0,0,0,0.14);">
+              <img src="Photo de profil.png" style="width:100%; height:100%; object-fit:cover;"/>
+            </div>
+            <div style="position:absolute; bottom:2px; right:2px; width:26px; height:26px; border-radius:50%; background:#e5197e; display:flex; align-items:center; justify-content:center; border:2.5px solid white;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+          </div>
+          <h2 style="font-size:22px; font-weight:800; color:#111; margin-bottom:3px;">Léa</h2>
+          <p style="font-size:13px; color:#666; margin-bottom:14px;">Membre des <span style="color:#e5197e; font-weight:700;">Les Tournesols</span></p>
+          <!-- Badge -->
+          <div style="background:white; border-radius:24px; padding:9px 20px; display:flex; align-items:center; gap:7px; box-shadow:0 2px 10px rgba(0,0,0,0.09); margin-bottom:16px;">
+            <span style="font-size:17px;">💪</span>
+            <span style="font-size:13px; font-weight:800; color:#111; letter-spacing:0.5px;">COLOC SOLIDE</span>
+          </div>
+          <!-- Progress -->
+          <div style="width:100%;">
+            <div style="height:9px; background:rgba(255,255,255,0.55); border-radius:6px; overflow:hidden; margin-bottom:7px;">
+              <div style="height:100%; width:72%; background:#e5197e; border-radius:6px;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:12px; font-weight:700; color:#666;">72%</span>
+              <span style="font-size:10px; font-weight:600; color:#888; letter-spacing:0.3px;">PROCHAIN · COLOC LÉGENDAIRE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div style="display:flex; gap:10px; padding:14px 16px 0;">
+          <div style="flex:1; background:#FFF8E0; border-radius:18px; padding:14px 10px; text-align:center;">
+            <div style="font-size:20px; margin-bottom:3px;">🔥</div>
+            <p style="font-size:17px; font-weight:800; color:#111;">3 sem.</p>
+            <p style="font-size:9px; font-weight:700; color:#C47F00; letter-spacing:0.8px; margin-top:2px; text-transform:uppercase;">Série parf.</p>
+          </div>
+          <div style="flex:1; background:#E8F6EE; border-radius:18px; padding:14px 10px; text-align:center;">
+            <div style="font-size:20px; margin-bottom:3px;">✅</div>
+            <p style="font-size:17px; font-weight:800; color:#111;">142</p>
+            <p style="font-size:9px; font-weight:700; color:#1A8C56; letter-spacing:0.8px; margin-top:2px; text-transform:uppercase;">Tâches totales</p>
+          </div>
+          <div style="flex:1; background:#FFF0F5; border-radius:18px; padding:14px 10px; text-align:center;">
+            <div style="font-size:20px; margin-bottom:3px;">🎁</div>
+            <p style="font-size:17px; font-weight:800; color:#111;">1/1</p>
+            <p style="font-size:9px; font-weight:700; color:#e5197e; letter-spacing:0.8px; margin-top:2px; text-transform:uppercase;">Joker mois</p>
+          </div>
+        </div>
+
+        <!-- Badges -->
+        <div style="padding:18px 16px 0;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 style="font-size:19px; font-weight:800; color:#111;">Badges</h3>
+            <span style="font-size:13px; font-weight:700; color:#bbb;">4/6</span>
+          </div>
+          <div style="display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; padding-bottom:4px;">
+            <div style="flex-shrink:0; width:104px; background:#FFE4F0; border-radius:18px; padding:14px 10px; display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <div style="width:46px; height:46px; background:#FFC7EA; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px;">🎲</div>
+              <p style="font-size:11px; font-weight:700; color:#D3007E; text-align:center; line-height:1.3;">Premier tirage</p>
+            </div>
+            <div style="flex-shrink:0; width:104px; background:#FFF5D0; border-radius:18px; padding:14px 10px; display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <div style="width:46px; height:46px; background:#FFE566; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px;">🔥</div>
+              <p style="font-size:11px; font-weight:700; color:#C47F00; text-align:center; line-height:1.3;">Série parfaite</p>
+            </div>
+            <div style="flex-shrink:0; width:104px; background:#E4F8EE; border-radius:18px; padding:14px 10px; display:flex; flex-direction:column; align-items:center; gap:8px;">
+              <div style="width:46px; height:46px; background:#A8ECC8; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px;">🎉</div>
+              <p style="font-size:11px; font-weight:700; color:#1A8C56; text-align:center; line-height:1.3;">Coloc à 100%</p>
+            </div>
+            <div style="flex-shrink:0; width:104px; background:#F0F0F0; border-radius:18px; padding:14px 10px; display:flex; flex-direction:column; align-items:center; gap:8px; opacity:0.45;">
+              <div style="width:46px; height:46px; background:#E0E0E0; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px;">🔒</div>
+              <p style="font-size:11px; font-weight:700; color:#999; text-align:center; line-height:1.3;">?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Historique d'équité -->
+        <div style="margin:16px 16px 0; background:white; border-radius:22px; padding:18px; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+            <h3 style="font-size:16px; font-weight:800; color:#111;">Historique d'équité</h3>
+            <span style="background:#E4F8EE; color:#1A8C56; font-size:10px; font-weight:700; padding:5px 10px; border-radius:20px; letter-spacing:0.5px;">ÉQUITABLE</span>
+          </div>
+          <p style="font-size:11px; color:#aaa; margin-bottom:14px;">Sur 4 semaines · écart moyen <span style="color:#e5197e; font-weight:700;">2,3%</span></p>
+          <!-- Bar chart -->
+          <div style="display:flex; gap:14px; align-items:flex-end; height:64px; padding:0 4px;">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;">
+              <div style="width:100%; display:flex; gap:3px; align-items:flex-end; flex:1;">
+                <div style="flex:1; background:#C4B5E8; border-radius:4px 4px 0 0; height:60%;"></div>
+                <div style="flex:1; background:#E0E0E0; border-radius:4px 4px 0 0; height:70%;"></div>
+              </div>
+              <span style="font-size:10px; color:#bbb; flex-shrink:0;">S-3</span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;">
+              <div style="width:100%; display:flex; gap:3px; align-items:flex-end; flex:1;">
+                <div style="flex:1; background:#C4B5E8; border-radius:4px 4px 0 0; height:78%;"></div>
+                <div style="flex:1; background:#E0E0E0; border-radius:4px 4px 0 0; height:74%;"></div>
+              </div>
+              <span style="font-size:10px; color:#bbb; flex-shrink:0;">S-2</span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;">
+              <div style="width:100%; display:flex; gap:3px; align-items:flex-end; flex:1;">
+                <div style="flex:1; background:#C4B5E8; border-radius:4px 4px 0 0; height:52%;"></div>
+                <div style="flex:1; background:#E0E0E0; border-radius:4px 4px 0 0; height:58%;"></div>
+              </div>
+              <span style="font-size:10px; color:#bbb; flex-shrink:0;">S-1</span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;">
+              <div style="width:100%; display:flex; gap:3px; align-items:flex-end; flex:1;">
+                <div style="flex:1; background:#C4B5E8; border-radius:4px 4px 0 0; height:68%;"></div>
+                <div style="flex:1; background:#E0E0E0; border-radius:4px 4px 0 0; height:66%;"></div>
+              </div>
+              <span style="font-size:10px; color:#bbb; flex-shrink:0;">S</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:14px; margin-top:8px; padding:0 4px;">
+            <div style="display:flex; align-items:center; gap:5px;">
+              <div style="width:9px; height:9px; border-radius:2px; background:#C4B5E8; flex-shrink:0;"></div>
+              <span style="font-size:11px; color:#888;">Vous</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:5px;">
+              <div style="width:9px; height:9px; border-radius:2px; background:#E0E0E0; flex-shrink:0;"></div>
+              <span style="font-size:11px; color:#888;">Moy. coloc</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ma coloc -->
+        <div style="padding:18px 16px 0;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 style="font-size:19px; font-weight:800; color:#111;">Ma coloc</h3>
+            <span style="font-size:13px; font-weight:700; color:#e5197e; cursor:pointer;">Changer</span>
+          </div>
+          <div style="background:white; border-radius:22px; padding:18px; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <h4 style="font-size:17px; font-weight:800; color:#111;">Les Tournesols</h4>
+              <div style="background:#7c3aed; color:white; font-size:10px; font-weight:700; padding:5px 11px; border-radius:14px;">NIV. 7</div>
+            </div>
+            <p style="font-size:12px; color:#aaa; margin-bottom:16px;">📍 rue de la Roquette, 75011</p>
+            <div style="display:flex; flex-direction:column; gap:13px;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:38px; height:38px; border-radius:50%; overflow:hidden; flex-shrink:0; border:2px solid #FFC7EA;">
+                  <img src="Photo de profil.png" style="width:100%; height:100%; object-fit:cover;"/>
+                </div>
+                <div style="flex:1;">
+                  <p style="font-size:14px; font-weight:700; color:#111;">Léa <span style="font-size:12px; font-weight:500; color:#bbb;">· vous</span></p>
+                  <p style="font-size:12px; color:#999;">Capitaine cuisine</p>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:38px; height:38px; border-radius:50%; overflow:hidden; flex-shrink:0; background:#FFB8D8; display:flex; align-items:center; justify-content:center;">
+                  <img src="pdp Lisa.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
+                </div>
+                <div style="flex:1;">
+                  <p style="font-size:14px; font-weight:700; color:#111;">Alex</p>
+                  <p style="font-size:12px; color:#999;">Reine du tri</p>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:38px; height:38px; border-radius:50%; overflow:hidden; flex-shrink:0; background:#A8ECC8; display:flex; align-items:center; justify-content:center;">
+                  <img src="pdpmaxime.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
+                </div>
+                <div style="flex:1;">
+                  <p style="font-size:14px; font-weight:700; color:#111;">Amir</p>
+                  <p style="font-size:12px; color:#999;">Maître du salon</p>
+                </div>
+                <span style="background:#F2F2F2; color:#888; font-size:10px; font-weight:600; padding:4px 10px; border-radius:12px; white-space:nowrap; flex-shrink:0;">ABSENT·E</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:38px; height:38px; border-radius:50%; overflow:hidden; flex-shrink:0; background:#FFE566; display:flex; align-items:center; justify-content:center;">
+                  <img src="pdp Jean.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
+                </div>
+                <div style="flex:1;">
+                  <p style="font-size:14px; font-weight:700; color:#111;">Nora</p>
+                  <p style="font-size:12px; color:#999;">Pro de la salle de bain</p>
+                </div>
+              </div>
+            </div>
+            <div style="background:#FFFBEC; border-radius:14px; padding:12px 13px; margin-top:14px; display:flex; align-items:flex-start; gap:9px;">
+              <span style="font-size:15px; flex-shrink:0;">🔒</span>
+              <p style="font-size:11px; color:#999; line-height:1.5;">Les listes individuelles restent privées. Seule la jauge collective est visible de tous, dans l'onglet Progrès.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mon foyer -->
+        <div style="padding:18px 16px 0;">
+          <h3 style="font-size:19px; font-weight:800; color:#111; margin-bottom:10px;">Mon foyer</h3>
+          <div style="background:white; border-radius:22px; padding:15px 18px; box-shadow:0 2px 12px rgba(0,0,0,0.06); display:flex; align-items:center; gap:13px; cursor:pointer;">
+            <div style="width:40px; height:40px; background:#E4F8EE; border-radius:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A8C56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div style="flex:1;">
+              <p style="font-size:15px; font-weight:700; color:#111;">12 rue de la Roquette</p>
+              <p style="font-size:12px; color:#aaa;">75011 Paris</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+        </div>
+
+        <!-- Préférences -->
+        <div style="padding:18px 16px 0;">
+          <h3 style="font-size:19px; font-weight:800; color:#111; margin-bottom:10px;">Préférences</h3>
+          <div style="background:white; border-radius:22px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+            <!-- Notifications -->
+            <div style="display:flex; align-items:center; gap:13px; padding:15px 18px; border-bottom:1px solid #F5F5F5;">
+              <div style="width:36px; height:36px; background:#F2F2F2; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              </div>
+              <div style="flex:1;">
+                <p style="font-size:14px; font-weight:700; color:#111;">Notifications</p>
+                <p style="font-size:11px; color:#aaa;">Tirage, jokers, séries</p>
+              </div>
+              <div id="toggle-notif" onclick="togglePref('notif')" style="width:46px; height:26px; background:#A078FF; border-radius:13px; position:relative; cursor:pointer; flex-shrink:0; transition:background 0.2s;">
+                <div id="toggle-notif-knob" style="position:absolute; right:3px; top:3px; width:20px; height:20px; background:white; border-radius:50%; transition:left 0.2s, right 0.2s;"></div>
+              </div>
+            </div>
+            <!-- Sons & confettis -->
+            <div style="display:flex; align-items:center; gap:13px; padding:15px 18px; border-bottom:1px solid #F5F5F5;">
+              <div style="width:36px; height:36px; background:#F2F2F2; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              </div>
+              <div style="flex:1;">
+                <p style="font-size:14px; font-weight:700; color:#111;">Sons &amp; confettis</p>
+                <p style="font-size:11px; color:#aaa;">À chaque tâche cochée</p>
+              </div>
+              <div id="toggle-sons" onclick="togglePref('sons')" style="width:46px; height:26px; background:#A078FF; border-radius:13px; position:relative; cursor:pointer; flex-shrink:0; transition:background 0.2s;">
+                <div id="toggle-sons-knob" style="position:absolute; right:3px; top:3px; width:20px; height:20px; background:white; border-radius:50%; transition:left 0.2s, right 0.2s;"></div>
+              </div>
+            </div>
+            <!-- Signaler absence -->
+            <div style="display:flex; align-items:center; gap:13px; padding:15px 18px; cursor:pointer;">
+              <div style="width:36px; height:36px; background:#F2F2F2; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+              </div>
+              <div style="flex:1;">
+                <p style="font-size:14px; font-weight:700; color:#111;">Signaler une absence</p>
+                <p style="font-size:11px; color:#aaa;">Avant le tirage de lundi</p>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <!-- Quitter coloc -->
+          <div style="background:white; border-radius:22px; margin-top:10px; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+            <div style="display:flex; align-items:center; gap:13px; padding:15px 18px; cursor:pointer;">
+              <div style="width:36px; height:36px; background:#FFE4F0; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              </div>
+              <span style="flex:1; font-size:14px; font-weight:700; color:#e5197e;">Quitter la coloc</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align:center; padding:20px 0 12px;">
+          <p style="font-size:11px; color:#ccc;">Coloc · v1.2.3 · Tirage chaque lundi 09:00</p>
+        </div>
+
+      </div>
+
+      <!-- Nav bar -->
+      <div class="h-nav">
+        <div class="h-nav-item" onclick="goTo(4)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+        </div>
+        <div class="h-nav-item" onclick="goTo(7)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <div class="h-nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
+        </div>
+        <div class="h-nav-item active" style="background:#D0BCFF;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#A078FF" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span class="h-nav-lbl" style="color:#A078FF;">Profil</span>
         </div>
       </div>
 
@@ -897,6 +1190,24 @@
     { name: 'Léa',    img: 'Photo de profil.png'  }
   ];
   let personIdx = 0;
+
+  /* ── Toggles préférences profil ── */
+  const prefState = { notif: true, sons: true };
+
+  function togglePref(key) {
+    prefState[key] = !prefState[key];
+    const track = document.getElementById('toggle-' + key);
+    const knob  = document.getElementById('toggle-' + key + '-knob');
+    if (prefState[key]) {
+      track.style.background = '#A078FF';
+      knob.style.right = '3px';
+      knob.style.left  = 'auto';
+    } else {
+      track.style.background = '#D0D0D0';
+      knob.style.left  = '3px';
+      knob.style.right = 'auto';
+    }
+  }
 
   /* ── Toggle checkboxes tâches ── */
   const taskChecked = [false, false, false, true];
@@ -1041,7 +1352,7 @@
   /* ── Navigation ── */
   let current = 1;
 
-  const TAB_STEPS = [4, 7];
+  const TAB_STEPS = [4, 7, 8];
 
   function goTo(next) {
     const from = document.getElementById('step' + current);
