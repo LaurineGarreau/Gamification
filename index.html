@@ -590,7 +590,7 @@
             </div>
             <span style="font-size:17px; font-weight:800; color:#0A6640; display:block;">2/3</span>
           </div>
-          <div style="flex:1; background:#FFF3C4; border-radius:20px; padding:12px 14px;">
+          <div onclick="goTo(6)" style="flex:1; background:#FFF3C4; border-radius:20px; padding:12px 14px; cursor:pointer;">
             <span style="font-size:12px; font-weight:700; color:#8A6200; display:block; margin-bottom:3px;">Prochain tirage · lun.</span>
             <span style="font-size:17px; font-weight:800; color:#8A6200; display:block;">09:00</span>
           </div>
@@ -712,6 +712,15 @@
       <div class="s5-content">
         <h1 class="s5-title">C'est le tour<br>de qui ?</h1>
         <p class="s5-sub">Tournez la roue pour découvrir vos missions de la semaine. Que le sort vous soit favorable !</p>
+        <!-- Sélecteur tâches par personne -->
+        <div style="display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.12); border-radius:16px; padding:11px 16px; margin-top:16px;">
+          <span style="color:rgba(255,255,255,0.85); font-size:13px; font-weight:600;">Tâches par personne</span>
+          <div style="display:flex; align-items:center; gap:14px;">
+            <button onclick="changeTasksPerPerson(-1)" style="width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); border:none; color:white; font-size:18px; font-weight:700; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; line-height:1;">−</button>
+            <span id="tasks-count" style="color:white; font-size:18px; font-weight:800; min-width:18px; text-align:center;">2</span>
+            <button onclick="changeTasksPerPerson(1)" style="width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); border:none; color:white; font-size:18px; font-weight:700; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; line-height:1;">+</button>
+          </div>
+        </div>
       </div>
 
       <!-- Roue sombre (SVG full screen) -->
@@ -792,7 +801,7 @@
       <div class="s6-top">
         <h1 class="s6-title">C'est l'heure du tirage !</h1>
         <p class="s6-sub">Appuyez sur le personnage pour modifier qui reçoit quelle tâche !</p>
-        <div class="s6-badge">2 taches / personne</div>
+        <div id="tasks-badge" class="s6-badge">2 tâches / personne</div>
         <div class="s6-arrow">▼</div>
       </div>
 
@@ -849,9 +858,10 @@
       <div id="spin-result" style="display:none;position:absolute;inset:0;z-index:50;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
         <div style="background:#fff;border-radius:26px;padding:32px 28px;margin:28px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.25);width:calc(100% - 56px);">
           <div style="font-size:46px;margin-bottom:14px;">🎉</div>
+          <p id="spin-counter" style="font-size:13px;font-weight:700;color:#A078FF;margin-bottom:4px;letter-spacing:0.5px;">Tâche 1 / 2</p>
           <p style="font-size:14px;font-weight:600;color:#888;margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase;">Tâche tirée au sort</p>
           <p id="spin-task" style="font-size:22px;font-weight:800;color:#D3007E;margin-bottom:24px;line-height:1.25;">—</p>
-          <button onclick="closeSpinResult()" style="background:#FFC7EA;border:none;border-radius:14px;padding:14px 36px;font-size:16px;font-weight:700;color:#D3007E;cursor:pointer;font-family:inherit;width:100%;">Super ! 🎊</button>
+          <button id="spin-result-btn" onclick="closeSpinResult()" style="background:#FFC7EA;border:none;border-radius:14px;padding:14px 36px;font-size:16px;font-weight:700;color:#D3007E;cursor:pointer;font-family:inherit;width:100%;">Super ! 🎊</button>
         </div>
       </div>
 
@@ -1691,6 +1701,8 @@
 
   function selectPerson(idx) {
     personIdx = idx;
+    currentSpinCount = 0;
+    currentPersonTasks = [];
     document.getElementById('wheel-avatar').src = PERSONS[idx].img;
     document.getElementById('next-person-name').textContent = PERSONS[idx].name;
     goTo(6);
@@ -1701,6 +1713,17 @@
     const p = PERSONS[personIdx];
     document.getElementById('wheel-avatar').src = p.img;
     document.getElementById('next-person-name').textContent = p.name;
+  }
+
+  /* ── Config tâches par personne ── */
+  let tasksPerPerson = 2;
+  let currentSpinCount = 0;
+  let currentPersonTasks = [];
+
+  function changeTasksPerPerson(delta) {
+    tasksPerPerson = Math.max(1, Math.min(5, tasksPerPerson + delta));
+    document.getElementById('tasks-count').textContent = tasksPerPerson;
+    document.getElementById('tasks-badge').textContent = tasksPerPerson + ' tâche' + (tasksPerPerson > 1 ? 's' : '') + ' / personne';
   }
 
   /* ── Roue : spin ── */
@@ -1729,12 +1752,15 @@
 
     setTimeout(() => {
       isSpinning = false;
-      // Calcul du secteur au sommet (pointeur à 12h)
       const norm  = ((wheelAngle % 360) + 360) % 360;
       const idx   = Math.floor(((360 - norm) % 360) / 60) % 6;
       document.getElementById('spin-task').textContent = WHEEL_TASKS[idx];
-      const popup = document.getElementById('spin-result');
-      popup.style.display = 'flex';
+      // Compteur et bouton dynamiques
+      const spinNum = currentSpinCount + 1;
+      document.getElementById('spin-counter').textContent = `Tâche ${spinNum} / ${tasksPerPerson}`;
+      const btn = document.getElementById('spin-result-btn');
+      btn.textContent = spinNum < tasksPerPerson ? 'Encore ! 🎲' : 'Super ! 🎊';
+      document.getElementById('spin-result').style.display = 'flex';
     }, 4600);
   }
 
@@ -1767,17 +1793,16 @@
     </div>`;
   }
 
-  function showTaskSummary(pIdx, taskName) {
+  function showTaskSummary(pIdx, tasks) {
     const p = PERSONS[pIdx];
     document.getElementById('summary-avatar').src  = p.img;
     document.getElementById('summary-name').textContent = p.name;
-    // Trouver la tâche principale + une aléatoire différente
-    const main = TASKS_DATA.find(t => t.name === taskName) || TASKS_DATA[0];
-    const others = TASKS_DATA.filter(t => t.name !== main.name);
-    const extra  = others[Math.floor(Math.random() * others.length)];
-    document.getElementById('summary-cards').innerHTML = taskCardHTML(main) + taskCardHTML(extra);
-    const overlay = document.getElementById('task-summary');
-    overlay.style.display = 'flex';
+    const cards = tasks.map(name => {
+      const t = TASKS_DATA.find(td => td.name === name) || TASKS_DATA[0];
+      return taskCardHTML(t);
+    });
+    document.getElementById('summary-cards').innerHTML = cards.join('');
+    document.getElementById('task-summary').style.display = 'flex';
   }
 
   function closeSummary() {
@@ -1796,10 +1821,16 @@
   }
 
   function closeSpinResult() {
-    document.getElementById('spin-result').style.display = 'none';
     const drawnTask = document.getElementById('spin-task').textContent;
-    goTo(5);
-    setTimeout(() => showTaskSummary(personIdx, drawnTask), 320);
+    currentPersonTasks.push(drawnTask);
+    currentSpinCount++;
+    document.getElementById('spin-result').style.display = 'none';
+    if (currentSpinCount < tasksPerPerson) {
+      // Encore un tour pour cette personne — on reste sur step6
+    } else {
+      goTo(5);
+      setTimeout(() => showTaskSummary(personIdx, currentPersonTasks), 320);
+    }
   }
 
   /* ── Notification après 6s sur l'écran d'accueil ── */
