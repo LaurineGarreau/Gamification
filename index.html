@@ -355,6 +355,14 @@
 <div class="iphone-wrap">
 <div class="iphone">
 
+  <!-- ══ Splash screen ══ -->
+  <div id="splash" style="position:absolute; inset:0; background:#F5F0EB; z-index:200; display:flex; align-items:center; justify-content:center; transition:opacity 0.5s ease;">
+    <div style="display:flex; align-items:center; gap:4px;">
+      <img src="Logo.png" style="height:64px; object-fit:contain;"/>
+      <span style="font-size:52px; font-weight:800; color:#D3007E; font-family:'Bricolage Grotesque',sans-serif; letter-spacing:-1.5px; line-height:1;">oloc</span>
+    </div>
+  </div>
+
   <!-- Status bar (permanent) -->
   <div class="status-bar">
     <span class="status-time" id="clock">9:41</span>
@@ -389,8 +397,53 @@
 
   <div class="steps">
 
+    <!-- ══════════════ ÉTAPE 0 – BIENVENUE ══════════════ -->
+    <div class="step active" id="step0" style="background:#fff; padding:58px 24px 34px; justify-content:flex-start;">
+
+      <!-- Logo -->
+      <div style="display:flex; justify-content:center; margin-top:24px; margin-bottom:28px;">
+        <img src="Logo.png" alt="Logo" style="width:110px; object-fit:contain;"/>
+      </div>
+
+      <!-- Titre + sous-titre -->
+      <h1 style="font-size:30px; font-weight:800; color:#111; text-align:center; margin-bottom:10px;">Bienvenue !</h1>
+      <p style="font-size:15px; color:#999; text-align:center; line-height:1.55; margin-bottom:30px; max-width:270px; align-self:center;">Transformez vos corvées en un jeu coopératif. Prêt à jouer avec vos colocs&nbsp;?</p>
+
+      <!-- Carte Créer une coloc -->
+      <div onclick="goTo(1)" style="width:100%; background:#FFD6EE; border-radius:22px; padding:16px 18px; margin-bottom:12px; display:flex; align-items:center; gap:14px; cursor:pointer;">
+        <div style="width:46px; height:46px; border-radius:50%; background:#7B0030; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><line x1="12" y1="12" x2="12" y2="21"/><line x1="9" y1="16.5" x2="15" y2="16.5"/></svg>
+        </div>
+        <div style="flex:1;">
+          <p style="font-size:16px; font-weight:800; color:#111; margin-bottom:4px;">Créer une coloc</p>
+          <p style="font-size:13px; color:#777; line-height:1.4;">Vous êtes le premier arrivé ? Créez l'espace pour votre foyer.</p>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <!-- Carte Rejoindre une coloc -->
+      <div style="width:100%; background:#FFF3B0; border-radius:22px; padding:16px 18px; margin-bottom:auto;">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:14px;">
+          <div style="width:46px; height:46px; border-radius:50%; background:#C47F00; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L22 7l-3-3"/></svg>
+          </div>
+          <div style="flex:1;">
+            <p style="font-size:16px; font-weight:800; color:#111; margin-bottom:4px;">Rejoindre une coloc</p>
+            <p style="font-size:13px; color:#777; line-height:1.4;">Vos colocs sont déjà là ? Entrez le code d'invitation.</p>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <input id="code-input" oninput="toggleRejoindre(this.value)" placeholder="EX: ABCD-1234" style="flex:1; height:44px; border-radius:12px; border:1.5px solid #E8D88A; background:white; padding:0 14px; font-size:13px; font-family:inherit; color:#111; outline:none;"/>
+          <button id="btn-rejoindre" onclick="goTo(1)" disabled style="height:44px; background:#E8E8E8; border:none; border-radius:12px; padding:0 16px; font-size:12px; font-weight:800; color:#bbb; cursor:default; font-family:inherit; letter-spacing:0.5px; transition:background 0.2s, color 0.2s;">REJOINDRE</button>
+        </div>
+      </div>
+
+
+    </div>
+
     <!-- ══════════════ ÉTAPE 1 ══════════════ -->
-    <div class="step active" id="step1">
+    <div class="step hidden-right" id="step1">
       <div class="progress">
         <div class="dot active"></div>
         <div class="dot"></div>
@@ -516,68 +569,112 @@
     </div>
 
     <!-- ══════════════ ÉCRAN HOME ══════════════ -->
-    <div class="step hidden-right" id="step4">
+    <div class="step hidden-right" id="step4" style="background:#fff;">
 
-      <!-- Header -->
-      <div class="h-header">
-        <h1 class="h-greeting">Hey Léa</h1>
-        <div class="h-avatar"><img src="Photo de profil.png" alt="avatar"/></div>
-      </div>
+      <!-- Scrollable content -->
+      <div style="width:100%; height:calc(100% - 104px); overflow-y:auto; scrollbar-width:none; padding:0 20px;">
 
-      <!-- Tâches planifiées -->
-      <div class="h-section-row">
-        <span class="h-section-title">Taches planifiées</span>
-        <button class="h-tout-voir">Tout voir →</button>
-      </div>
-
-      <!-- Day row -->
-      <div class="h-day-row">
-
-        <!-- Horloge -->
-        <div class="h-day-item clock">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        </div>
-
-        <!-- Lundi (today) — fond jaune, coche bleue -->
-        <div class="h-day-item today">
-          <span class="h-day-label">Lu</span>
-          <div class="h-check blue">
-            <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- Header -->
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 0 16px;">
+          <h1 style="font-size:32px; font-weight:800; color:#111; letter-spacing:-0.5px;">Hey Léa</h1>
+          <div style="width:52px; height:52px; border-radius:50%; overflow:hidden; flex-shrink:0; box-shadow:0 2px 10px rgba(0,0,0,0.15);">
+            <img src="Photo de profil.png" style="width:100%; height:100%; object-fit:cover;"/>
           </div>
         </div>
 
-        <!-- Ma → Di — fond blanc, coche rose -->
-        <div class="h-day-item"><span class="h-day-label">Ma</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-        <div class="h-day-item"><span class="h-day-label">Me</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-        <div class="h-day-item"><span class="h-day-label">Je</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-        <div class="h-day-item"><span class="h-day-label">Ve</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-        <div class="h-day-item"><span class="h-day-label">Sa</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-        <div class="h-day-item"><span class="h-day-label">Di</span><div class="h-check pink"><svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <!-- Pill badges -->
+        <div style="display:flex; gap:10px; margin-bottom:22px;">
+          <div style="flex:1; background:#B8F5D8; border-radius:20px; padding:12px 14px;">
+            <div style="display:flex; align-items:center; gap:5px; margin-bottom:3px;">
+              <span style="font-size:12px; font-weight:700; color:#0A6640;">Série · semaine</span>
+            </div>
+            <span style="font-size:17px; font-weight:800; color:#0A6640; display:block;">2/3</span>
+          </div>
+          <div style="flex:1; background:#FFF3C4; border-radius:20px; padding:12px 14px;">
+            <span style="font-size:12px; font-weight:700; color:#8A6200; display:block; margin-bottom:3px;">Prochain tirage · lun.</span>
+            <span style="font-size:17px; font-weight:800; color:#8A6200; display:block;">09:00</span>
+          </div>
+        </div>
+
+        <!-- Main task card -->
+        <div style="background:white; border-radius:26px; box-shadow:0 4px 24px rgba(0,0,0,0.09); margin-bottom:26px; overflow:hidden; border:1.5px solid #F2EAE4;">
+          <!-- Top: avatar + task info -->
+          <div style="display:flex; align-items:center; background:linear-gradient(105deg,#FFF0F8 0%,#fff 45%); padding:18px 18px 14px 14px;">
+            <div style="flex-shrink:0; width:108px;">
+              <img src="balai.png" style="width:108px; object-fit:contain; display:block;"/>
+            </div>
+            <div style="flex:1; padding-left:8px;">
+              <p style="font-size:10px; font-weight:700; color:#C4A8B8; letter-spacing:1.5px; margin-bottom:7px; text-transform:uppercase;">Aujourd'hui · Mardi</p>
+              <h2 style="font-size:24px; font-weight:800; color:#1a0a3c; line-height:1.15; margin-bottom:5px;">Nettoyer<br>la cuisine</h2>
+              <p style="font-size:13px; font-weight:600; color:#7c3aed; margin-bottom:14px;">Surfaces &amp; évier</p>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <span style="background:#e5197e; color:white; font-size:13px; font-weight:800; padding:7px 16px; border-radius:20px; white-space:nowrap;">120 PT</span>
+                <span style="background:white; border:1.5px solid #DDD; color:#444; font-size:11px; font-weight:700; padding:7px 12px; border-radius:20px; white-space:nowrap;">~15 min</span>
+              </div>
+            </div>
+          </div>
+          <!-- Validate button -->
+          <div style="padding:0 14px 14px; background:white;">
+            <button onclick="goTo(7)" style="width:100%; height:52px; background:#FFC7EA; border:none; border-radius:16px; font-size:16px; font-weight:800; color:#e5197e; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:10px;">
+              Valider ma tâche
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Ma semaine header -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:13px;">
+          <h2 style="font-size:22px; font-weight:800; color:#111;">Ma semaine</h2>
+          <button onclick="goTo(10)" style="background:white; border:1.5px solid #E8E0D8; border-radius:20px; padding:7px 13px; font-size:12px; font-weight:600; color:#111; cursor:pointer; font-family:inherit; display:flex; align-items:center; gap:5px;">
+            Tout voir
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- Day pills row -->
+        <div style="display:flex; gap:6px; margin-bottom:26px;">
+          <!-- Clock -->
+          <div style="width:44px; min-width:44px; height:62px; border-radius:16px; background:#D1FAE5; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <!-- Lu – rose, coché -->
+          <div style="flex:1; height:62px; border-radius:16px; background:#FFC7EA; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-width:0;">
+            <span style="font-size:12px; font-weight:800; color:#D3007E;">Lu</span>
+            <div style="width:20px; height:20px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center;">
+              <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#e5197e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <!-- Ma – jaune, coché (aujourd'hui) -->
+          <div style="flex:1; height:62px; border-radius:16px; background:#FACE2C; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-width:0;">
+            <span style="font-size:12px; font-weight:800; color:#7A5000;">Ma</span>
+            <div style="width:20px; height:20px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center;">
+              <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#C47F00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <!-- Me → Di – vide -->
+          <div style="flex:1; height:62px; border-radius:16px; background:white; border:1.5px solid #EDE8E3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-width:0;"><span style="font-size:12px; font-weight:700; color:#bbb;">Me</span><div style="width:18px; height:18px; border-radius:50%; border:1.5px solid #DDD;"></div></div>
+          <div style="flex:1; height:62px; border-radius:16px; background:white; border:1.5px solid #EDE8E3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-width:0;"><span style="font-size:12px; font-weight:700; color:#bbb;">Je</span><div style="width:18px; height:18px; border-radius:50%; border:1.5px solid #DDD;"></div></div>
+          <div style="flex:1; height:62px; border-radius:16px; background:white; border:1.5px solid #EDE8E3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-width:0;"><span style="font-size:12px; font-weight:700; color:#bbb;">Ve</span><div style="width:18px; height:18px; border-radius:50%; border:1.5px solid #DDD;"></div></div>
+          <div style="flex:1; height:62px; border-radius:16px; background:white; border:1.5px solid #EDE8E3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-width:0;"><span style="font-size:12px; font-weight:700; color:#bbb;">Sa</span><div style="width:18px; height:18px; border-radius:50%; border:1.5px solid #DDD;"></div></div>
+          <div style="flex:1; height:62px; border-radius:16px; background:white; border:1.5px solid #EDE8E3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-width:0;"><span style="font-size:12px; font-weight:700; color:#bbb;">Di</span><div style="width:18px; height:18px; border-radius:50%; border:1.5px solid #DDD;"></div></div>
+        </div>
+
+        <!-- Objectif coloc -->
+        <div style="background:white; border-radius:22px; padding:18px 20px; box-shadow:0 2px 16px rgba(0,0,0,0.07); border:1.5px solid #F0EAE4; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <p style="font-size:17px; font-weight:800; color:#111;">Objectif coloc</p>
+            <p style="font-size:17px; font-weight:800; color:#7c3aed;">62 %</p>
+          </div>
+          <div style="height:10px; background:#EDE8F5; border-radius:8px; overflow:hidden; margin-bottom:12px;">
+            <div style="height:100%; width:62%; background:linear-gradient(90deg,#FACE2C,#F67DC6); border-radius:8px;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+            <p style="font-size:12px; color:#bbb; line-height:1.45;">13 / 21 tâches<br>cette semaine</p>
+            <p style="font-size:13px; font-weight:800; color:#059669; text-align:right; line-height:1.45;">+ 320 pts<br>coloc</p>
+          </div>
+        </div>
 
       </div>
-
-      <div class="h-gap"></div>
-
-      <!-- Cette semaine -->
-      <div class="h-week-label">Cette semaine</div>
-
-      <!-- Card -->
-      <div class="h-card">
-        <div class="h-card-img">
-          <img src="balai.png" alt="personnage"/>
-        </div>
-        <div class="h-stats">
-          <div class="h-stat"><span class="h-stat-val">6</span><span class="h-stat-lbl">Jours restants</span></div>
-          <div class="h-stat"><span class="h-stat-val">0</span><span class="h-stat-lbl">Taches</span></div>
-          <div class="h-stat"><span class="h-stat-val">0</span><span class="h-stat-lbl">Pt gagné</span></div>
-        </div>
-      </div>
-
-      <!-- Valider -->
-      <button class="h-btn-valider">
-        <span>Valider ma tâche</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
 
       <!-- Bottom nav -->
       <div class="h-nav">
@@ -778,7 +875,7 @@
             <p style="font-size:13px;font-weight:600;color:#111;"><span style="font-size:22px;font-weight:800;">240</span> / 500</p>
           </div>
           <div style="height:10px;background:#E0E0E0;border-radius:6px;overflow:hidden;margin-bottom:10px;">
-            <div style="height:100%;width:48%;background:linear-gradient(90deg,#FACE2C,#e8197e);border-radius:6px;"></div>
+            <div style="height:100%;width:48%;background:linear-gradient(90deg,#FACE2C,#F67DC6);border-radius:6px;"></div>
           </div>
           <p style="font-size:13px;font-weight:600;color:#7c3aed;">✦ Encore 260 PTS pour le Joker !</p>
         </div>
@@ -894,8 +991,8 @@
               <svg width="190" height="190" viewBox="0 0 190 190" style="transform:rotate(-90deg);">
                 <defs>
                   <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#FF8C42"/>
-                    <stop offset="100%" stop-color="#e5197e"/>
+                    <stop offset="0%" stop-color="#FACE2C"/>
+                    <stop offset="100%" stop-color="#F67DC6"/>
                   </linearGradient>
                 </defs>
                 <circle cx="95" cy="95" r="76" fill="none" stroke="#E8E4E0" stroke-width="16"/>
@@ -911,7 +1008,7 @@
           </div>
           <!-- Barre gradient -->
           <div style="height:10px; background:#E0E0E0; border-radius:6px; overflow:hidden; margin-bottom:10px;">
-            <div style="height:100%; width:85%; background:linear-gradient(90deg,#FACE2C,#e8197e); border-radius:6px;"></div>
+            <div style="height:100%; width:85%; background:linear-gradient(90deg,#FACE2C,#F67DC6); border-radius:6px;"></div>
           </div>
           <p style="font-size:13px; font-weight:600; color:#7c3aed;">✦ Encore 15 tâches pour le bonus coloc !</p>
         </div>
@@ -924,8 +1021,8 @@
 
         <!-- Rang 1 – Rose -->
         <div style="background:#F5F5F5; border:1.5px solid #C8C5CC; border-radius:24px; padding:18px 20px; display:flex; align-items:center; gap:16px; margin-bottom:10px;">
-          <div style="width:32px; height:32px; border-radius:50%; background:#D3007E; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <span style="font-size:14px; font-weight:800; color:white;">1</span>
+          <div style="width:32px; height:32px; border-radius:50%; background:#F5F5F5; border:1.5px solid #C8C5CC; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <span style="font-size:14px; font-weight:800; color:#111;">1</span>
           </div>
           <div style="width:52px; height:52px; border-radius:50%; background:#D3007E; overflow:hidden; flex-shrink:0;">
             <img src="Photo de profil.png" style="width:100%; height:100%; object-fit:cover;"/>
@@ -942,8 +1039,8 @@
 
         <!-- Rang 2 – Jaune -->
         <div style="background:#F5F5F5; border:1.5px solid #C8C5CC; border-radius:24px; padding:18px 20px; display:flex; align-items:center; gap:16px; margin-bottom:10px;">
-          <div style="width:32px; height:32px; border-radius:50%; background:#C47F00; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <span style="font-size:14px; font-weight:800; color:white;">2</span>
+          <div style="width:32px; height:32px; border-radius:50%; background:#F5F5F5; border:1.5px solid #C8C5CC; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <span style="font-size:14px; font-weight:800; color:#111;">2</span>
           </div>
           <div style="width:52px; height:52px; border-radius:50%; background:#C47F00; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
             <img src="pdp Lisa.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
@@ -960,8 +1057,8 @@
 
         <!-- Rang 3 – Vert -->
         <div style="background:#F5F5F5; border:1.5px solid #C8C5CC; border-radius:24px; padding:18px 20px; display:flex; align-items:center; gap:16px; margin-bottom:10px;">
-          <div style="width:32px; height:32px; border-radius:50%; background:#1A8C56; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <span style="font-size:14px; font-weight:800; color:white;">3</span>
+          <div style="width:32px; height:32px; border-radius:50%; background:#F5F5F5; border:1.5px solid #C8C5CC; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <span style="font-size:14px; font-weight:800; color:#111;">3</span>
           </div>
           <div style="width:52px; height:52px; border-radius:50%; background:#1A8C56; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
             <img src="pdpmaxime.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
@@ -978,8 +1075,8 @@
 
         <!-- Rang 4 – Bleu -->
         <div style="background:#F5F5F5; border:1.5px solid #C8C5CC; border-radius:24px; padding:18px 20px; display:flex; align-items:center; gap:16px; margin-bottom:10px;">
-          <div style="width:32px; height:32px; border-radius:50%; background:#0288C7; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <span style="font-size:14px; font-weight:800; color:white;">4</span>
+          <div style="width:32px; height:32px; border-radius:50%; background:#F5F5F5; border:1.5px solid #C8C5CC; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <span style="font-size:14px; font-weight:800; color:#111;">4</span>
           </div>
           <div style="width:52px; height:52px; border-radius:50%; background:#0288C7; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
             <img src="pdp Jean.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
@@ -1031,7 +1128,7 @@
         </div>
 
         <!-- Hero lavender -->
-        <div style="background:#EAE4F5; margin:0 0 0; padding:18px 22px 24px; display:flex; flex-direction:column; align-items:center;">
+        <div style="background:#fff; margin:0 0 0; padding:18px 22px 24px; display:flex; flex-direction:column; align-items:center;">
           <!-- Avatar -->
           <div style="position:relative; margin-bottom:12px;">
             <div style="width:90px; height:90px; border-radius:50%; overflow:hidden; border:3px solid white; box-shadow:0 4px 16px rgba(0,0,0,0.14);">
@@ -1051,7 +1148,7 @@
           <!-- Progress -->
           <div style="width:100%;">
             <div style="height:9px; background:rgba(255,255,255,0.55); border-radius:6px; overflow:hidden; margin-bottom:7px;">
-              <div style="height:100%; width:72%; background:#e5197e; border-radius:6px;"></div>
+              <div style="height:100%; width:72%; background:linear-gradient(90deg,#FACE2C,#F67DC6); border-radius:6px;"></div>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span style="font-size:12px; font-weight:700; color:#666;">72%</span>
@@ -1308,6 +1405,205 @@
 
     </div>
 
+    <!-- ══════════════ ÉTAPE 10 – CALENDRIER ══════════════ -->
+    <div class="step hidden-right" id="step10" style="background:#fff; padding:58px 0 0; justify-content:flex-start;">
+
+      <div style="width:100%; height:100%; overflow-y:auto; scrollbar-width:none; padding:0 20px 40px;">
+
+        <!-- Header -->
+        <div style="display:flex; align-items:center; gap:14px; padding:14px 0 20px;">
+          <button onclick="goTo(4)" style="width:38px; height:38px; border-radius:50%; background:#F5F5F5; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </button>
+          <h1 style="font-size:24px; font-weight:800; color:#111; letter-spacing:-0.3px;">Ma semaine</h1>
+        </div>
+
+        <!-- Month nav -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+          <button style="width:34px; height:34px; border-radius:50%; background:#F5F5F5; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <span style="font-size:16px; font-weight:800; color:#111;">Mai 2026</span>
+          <button style="width:34px; height:34px; border-radius:50%; background:#F5F5F5; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+
+        <!-- Day headers -->
+        <div style="display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:8px;">
+          <div style="text-align:center; font-size:11px; font-weight:700; color:#bbb; padding:4px 0;">L</div>
+          <div style="text-align:center; font-size:11px; font-weight:700; color:#bbb; padding:4px 0;">M</div>
+          <div style="text-align:center; font-size:11px; font-weight:700; color:#bbb; padding:4px 0;">M</div>
+          <div style="text-align:center; font-size:11px; font-weight:700; color:#bbb; padding:4px 0;">J</div>
+          <div style="text-align:center; font-size:11px; font-weight:700; color:#bbb; padding:4px 0;">V</div>
+          <div style="text-align:center; font-size:11px; font-weight:700; color:#bbb; padding:4px 0;">S</div>
+          <div style="text-align:center; font-size:11px; font-weight:700; color:#bbb; padding:4px 0;">D</div>
+        </div>
+
+        <!-- Calendar grid (Mai 2026 : 1er = vendredi) -->
+        <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:24px;">
+
+          <!-- Semaine 1 : vide x4, puis 1 2 3 -->
+          <div></div><div></div><div></div><div></div>
+          <div style="text-align:center; padding:6px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">1</span></div>
+          <div style="text-align:center; padding:6px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">2</span></div>
+          <div style="text-align:center; padding:6px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">3</span></div>
+
+          <!-- Semaine 2 : 4 → 10 -->
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">4</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
+          </div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">5</span></div>
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">6</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
+          </div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">7</span></div>
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">8</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#FFE566;"></div>
+          </div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">9</span></div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">10</span></div>
+
+          <!-- Semaine 3 : 11 → 17 -->
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">11</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
+          </div>
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">12</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
+          </div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">13</span></div>
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">14</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#A8ECC8;"></div>
+          </div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">15</span></div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">16</span></div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">17</span></div>
+
+          <!-- Semaine 4 : 18 → 24 -->
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">18</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
+          </div>
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">19</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#FFE566;"></div>
+          </div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">20</span></div>
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">21</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
+          </div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">22</span></div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">23</span></div>
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">24</span></div>
+
+          <!-- Semaine 5 : 25(Lu done) 26(Ma today) 27-31 -->
+          <!-- Lu 25 – fait, rose -->
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <div style="width:32px; height:32px; border-radius:50%; background:#FFC7EA; display:flex; align-items:center; justify-content:center;">
+              <span style="font-size:13px; font-weight:800; color:#D3007E;">25</span>
+            </div>
+            <div style="width:5px; height:5px; border-radius:50%; background:#e5197e;"></div>
+          </div>
+          <!-- Ma 26 – aujourd'hui, jaune -->
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <div style="width:32px; height:32px; border-radius:50%; background:#FACE2C; display:flex; align-items:center; justify-content:center;">
+              <span style="font-size:13px; font-weight:800; color:#7A5000;">26</span>
+            </div>
+            <div style="width:5px; height:5px; border-radius:50%; background:#C47F00;"></div>
+          </div>
+          <!-- Me 27 -->
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">27</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#E0E0E0;"></div>
+          </div>
+          <!-- Je 28 -->
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">28</span></div>
+          <!-- Ve 29 -->
+          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+            <span style="font-size:13px; font-weight:600; color:#111;">29</span>
+            <div style="width:5px; height:5px; border-radius:50%; background:#E0E0E0;"></div>
+          </div>
+          <!-- Sa 30 -->
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">30</span></div>
+          <!-- Di 31 -->
+          <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">31</span></div>
+
+        </div>
+
+        <!-- Légende -->
+        <div style="display:flex; gap:16px; margin-bottom:24px; padding:0 4px;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="width:10px; height:10px; border-radius:50%; background:#FFC7EA;"></div>
+            <span style="font-size:11px; color:#888;">Fait</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="width:10px; height:10px; border-radius:50%; background:#FACE2C;"></div>
+            <span style="font-size:11px; color:#888;">Aujourd'hui</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="width:10px; height:10px; border-radius:50%; background:#E0E0E0;"></div>
+            <span style="font-size:11px; color:#888;">À venir</span>
+          </div>
+        </div>
+
+        <!-- Séparateur -->
+        <div style="height:1.5px; background:#F0EAE4; margin-bottom:20px;"></div>
+
+        <!-- Tâches de la semaine -->
+        <h2 style="font-size:19px; font-weight:800; color:#111; margin-bottom:14px;">Cette semaine</h2>
+
+        <!-- Lu 25 – fait -->
+        <div style="background:#FFF0F7; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; margin-bottom:10px;">
+          <div style="width:38px; height:38px; border-radius:12px; background:#FFC7EA; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#D3007E;">Lu</div>
+          <div style="flex:1;">
+            <p style="font-size:14px; font-weight:800; color:#111; text-decoration:line-through; opacity:0.6;">Nettoyer la cuisine</p>
+            <p style="font-size:11px; color:#bbb; margin-top:2px;">Surfaces &amp; évier · 120 pts</p>
+          </div>
+          <div style="width:24px; height:24px; border-radius:50%; background:#e5197e; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <!-- Ma 26 – en cours -->
+        <div style="background:#FFFBEC; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; margin-bottom:10px; border:1.5px solid #FACE2C;">
+          <div style="width:38px; height:38px; border-radius:12px; background:#FACE2C; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#7A5000;">Ma</div>
+          <div style="flex:1;">
+            <p style="font-size:14px; font-weight:800; color:#111;">Sortir les poubelles</p>
+            <p style="font-size:11px; color:#aaa; margin-top:2px;">Cuisine &amp; recyclage · 50 pts</p>
+          </div>
+          <span style="font-size:10px; font-weight:700; color:#C47F00; background:#FFE566; padding:4px 9px; border-radius:10px; flex-shrink:0;">En cours</span>
+        </div>
+
+        <!-- Me 27 – à venir -->
+        <div style="background:#F5F5F5; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; margin-bottom:10px;">
+          <div style="width:38px; height:38px; border-radius:12px; background:#E8E8E8; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#999;">Me</div>
+          <div style="flex:1;">
+            <p style="font-size:14px; font-weight:800; color:#aaa;">Lancer une machine</p>
+            <p style="font-size:11px; color:#ccc; margin-top:2px;">Couleurs sombres · 70 pts</p>
+          </div>
+          <div style="width:22px; height:22px; border-radius:50%; border:1.5px solid #DDD; flex-shrink:0;"></div>
+        </div>
+
+        <!-- Ve 29 – à venir -->
+        <div style="background:#F5F5F5; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px;">
+          <div style="width:38px; height:38px; border-radius:12px; background:#E8E8E8; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#999;">Ve</div>
+          <div style="flex:1;">
+            <p style="font-size:14px; font-weight:800; color:#aaa;">Passer l'aspirateur</p>
+            <p style="font-size:11px; color:#ccc; margin-top:2px;">Salon &amp; couloirs · 60 pts</p>
+          </div>
+          <div style="width:22px; height:22px; border-radius:50%; border:1.5px solid #DDD; flex-shrink:0;"></div>
+        </div>
+
+      </div>
+    </div>
+
   </div><!-- /steps -->
 
   <div class="home-bar"></div>
@@ -1333,6 +1629,29 @@
     { name: 'Léa',    img: 'Photo de profil.png'  }
   ];
   let personIdx = 0;
+
+  /* ── Splash screen ── */
+  setTimeout(() => {
+    const splash = document.getElementById('splash');
+    splash.style.opacity = '0';
+    setTimeout(() => { splash.style.display = 'none'; }, 500);
+  }, 2000);
+
+  /* ── Bouton Rejoindre ── */
+  function toggleRejoindre(val) {
+    const btn = document.getElementById('btn-rejoindre');
+    if (val.trim().length > 0) {
+      btn.disabled = false;
+      btn.style.background = '#FACE2C';
+      btn.style.color = '#7A5000';
+      btn.style.cursor = 'pointer';
+    } else {
+      btn.disabled = true;
+      btn.style.background = '#E8E8E8';
+      btn.style.color = '#bbb';
+      btn.style.cursor = 'default';
+    }
+  }
 
   /* ── Toggles préférences profil ── */
   const prefState = { notif: true, sons: true };
@@ -1493,7 +1812,7 @@
   }, 6000);
 
   /* ── Navigation ── */
-  let current = 1;
+  let current = 0;
 
   const TAB_STEPS = [4, 7, 8, 9];
 
