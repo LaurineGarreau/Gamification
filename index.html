@@ -682,7 +682,7 @@
                 </div>
               </div>
               <div style="padding:0 14px 14px; background:white; flex-shrink:0;">
-                <button style="width:100%; height:48px; background:#FFC7EA; border:none; border-radius:14px; font-size:15px; font-weight:800; color:#e5197e; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:8px;">
+                <button onclick="validateSliderTask(this, 0)" style="width:100%; height:48px; background:#FFC7EA; border:none; border-radius:14px; font-size:15px; font-weight:800; color:#e5197e; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:8px;">
                   Valider ma tâche
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
@@ -692,10 +692,8 @@
             <!-- ── Card 3 : Lancer une machine ── -->
             <div style="min-width:calc(100% - 36px); scroll-snap-align:start; background:white; border-radius:26px; box-shadow:0 4px 20px rgba(0,0,0,0.09); overflow:hidden; border:1.5px solid #FFF0BB; display:flex; flex-direction:column; flex-shrink:0;">
               <div style="display:flex; align-items:center; background:linear-gradient(105deg,#FFFBEA 0%,#fff 50%); padding:16px 16px 12px 12px; flex:1;">
-                <div style="flex-shrink:0; width:100px; height:100px; display:flex; align-items:center; justify-content:center;">
-                  <div style="width:72px; height:72px; border-radius:50%; background:#FFE566; display:flex; align-items:center; justify-content:center;">
-                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C47F00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M2 9h20M2 15h20"/></svg>
-                  </div>
+                <div style="flex-shrink:0; width:100px;">
+                  <img src="machine.png" style="width:100px; object-fit:contain; display:block;"/>
                 </div>
                 <div style="flex:1; padding-left:8px;">
                   <p style="font-size:10px; font-weight:700; color:#C4A8B8; letter-spacing:1.5px; margin-bottom:6px; text-transform:uppercase;">Jeudi · Cette semaine</p>
@@ -708,7 +706,7 @@
                 </div>
               </div>
               <div style="padding:0 14px 14px; background:white; flex-shrink:0;">
-                <button style="width:100%; height:48px; background:#FFC7EA; border:none; border-radius:14px; font-size:15px; font-weight:800; color:#e5197e; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:8px;">
+                <button onclick="validateSliderTask(this, 2)" style="width:100%; height:48px; background:#FFC7EA; border:none; border-radius:14px; font-size:15px; font-weight:800; color:#e5197e; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:8px;">
                   Valider ma tâche
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
@@ -2067,16 +2065,17 @@
     }
   }
 
-  function validateHomeTask() {
-    if (!taskChecked[1]) {
-      toggleCheck(1);
-    }
-    const btn = document.getElementById('home-validate-btn');
+  function validateSliderTask(btn, idx) {
+    if (!taskChecked[idx]) toggleCheck(idx);
     btn.style.background = '#D1FAE5';
     btn.style.color = '#059669';
     btn.style.cursor = 'default';
     btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#059669" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Tâche validée !';
     btn.onclick = null;
+  }
+
+  function validateHomeTask() {
+    validateSliderTask(document.getElementById('home-validate-btn'), 1);
   }
 
   function removePerson(idx) {
