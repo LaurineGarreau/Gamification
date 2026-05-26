@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1206,9 +1208,9 @@
         <!-- Hero lavender -->
         <div style="background:#fff; margin:0 0 0; padding:18px 22px 24px; display:flex; flex-direction:column; align-items:center;">
           <!-- Avatar -->
-          <div style="position:relative; margin-bottom:12px;">
+          <div onclick="openAvatarEditor()" style="position:relative; margin-bottom:12px; cursor:pointer;">
             <div style="width:90px; height:90px; border-radius:50%; overflow:hidden; border:3px solid white; box-shadow:0 4px 16px rgba(0,0,0,0.14);">
-              <img src="Photo de profil.png" style="width:100%; height:100%; object-fit:cover;"/>
+              <img id="profile-avatar" src="Photo de profil.png" style="width:100%; height:100%; object-fit:cover;"/>
             </div>
             <div style="position:absolute; bottom:2px; right:2px; width:26px; height:26px; border-radius:50%; background:#e5197e; display:flex; align-items:center; justify-content:center; border:2.5px solid white;">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
@@ -1389,13 +1391,13 @@
         <!-- Mon foyer -->
         <div style="padding:18px 16px 0;">
           <h3 style="font-size:19px; font-weight:800; color:#111; margin-bottom:10px;">Mon foyer</h3>
-          <div style="background:white; border-radius:22px; padding:15px 18px; box-shadow:0 2px 12px rgba(0,0,0,0.06); display:flex; align-items:center; gap:13px; cursor:pointer;">
+          <div onclick="openMapEditor()" style="background:white; border-radius:22px; padding:15px 18px; box-shadow:0 2px 12px rgba(0,0,0,0.06); display:flex; align-items:center; gap:13px; cursor:pointer;">
             <div style="width:40px; height:40px; background:#E4F8EE; border-radius:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A8C56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <div style="flex:1;">
-              <p style="font-size:15px; font-weight:700; color:#111;">12 rue de la Roquette</p>
-              <p style="font-size:12px; color:#aaa;">75011 Paris</p>
+              <p id="foyer-line1" style="font-size:15px; font-weight:700; color:#111;">12 rue de la Roquette</p>
+              <p id="foyer-line2" style="font-size:12px; color:#aaa;">75011 Paris</p>
             </div>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
           </div>
@@ -1462,6 +1464,79 @@
 
       </div>
 
+      <!-- ══ Overlay éditeur avatar ══ -->
+      <div id="avatar-editor" style="display:none;position:absolute;inset:0;z-index:50;background:#FAF9F7;flex-direction:column;">
+        <!-- Header fixe -->
+        <div style="padding:56px 18px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EDEDED;flex-shrink:0;background:#FAF9F7;">
+          <button onclick="closeAvatarEditor()" style="width:36px;height:36px;border-radius:50%;background:#F0F0F0;border:none;font-size:18px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;">←</button>
+          <h2 style="font-size:18px;font-weight:800;color:#111;">Modifier l'avatar</h2>
+        </div>
+        <!-- Zone scrollable -->
+        <div style="flex:1;overflow-y:auto;padding:0 18px 28px;">
+          <!-- Aperçu avatar -->
+          <div style="display:flex;justify-content:center;padding:24px 0 20px;">
+            <img id="avatar-preview-big" src="filleblonde.png" style="width:130px;height:120px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.15));"/>
+          </div>
+          <!-- Coupe -->
+          <div class="card" style="margin-bottom:14px;">
+            <p class="card-title">Coupe</p>
+            <div class="styles-grid">
+              <div class="style-thumb prof-style selected" onclick="pickProfileStyle(this)" style="background-image:url('coupe 6 .png')"></div>
+              <div class="style-thumb prof-style" onclick="pickProfileStyle(this)" style="background-image:url('coupe 2.png')"></div>
+              <div class="style-thumb prof-style" onclick="pickProfileStyle(this)" style="background-image:url('coupe 3.png')"></div>
+              <div class="style-thumb prof-style" onclick="pickProfileStyle(this)" style="background-image:url('coupe 4.png')"></div>
+              <div class="style-thumb prof-style" onclick="pickProfileStyle(this)" style="background-image:url('coupe 5.png')"></div>
+              <div class="style-thumb prof-style" onclick="pickProfileStyle(this)" style="background-image:url('coupe 1.png')"></div>
+            </div>
+          </div>
+          <!-- Couleur cheveux -->
+          <div class="card" style="margin-bottom:14px;">
+            <p class="card-title">Couleur des cheveux</p>
+            <div class="colors-row">
+              <div class="swatch prof-hair selected" style="background:#EAA71B" onclick="pickProfileHair(this)"></div>
+              <div class="swatch prof-hair" style="background:#413D2B" onclick="pickProfileHair(this)"></div>
+              <div class="swatch prof-hair" style="background:#E68849" onclick="pickProfileHair(this)"></div>
+              <div class="swatch prof-hair" style="background:#8C5C32" onclick="pickProfileHair(this)"></div>
+              <div class="swatch prof-hair" style="background:#33131D" onclick="pickProfileHair(this)"></div>
+              <div class="swatch prof-hair" style="background:#BFA288" onclick="pickProfileHair(this)"></div>
+            </div>
+          </div>
+          <!-- Couleur yeux -->
+          <div class="card" style="margin-bottom:24px;">
+            <p class="card-title">Couleur des yeux</p>
+            <div class="colors-row">
+              <div class="swatch prof-eye selected" style="background:#60b0e8" onclick="pickProfileEye(this)"></div>
+              <div class="swatch prof-eye" style="background:#6b3020" onclick="pickProfileEye(this)"></div>
+              <div class="swatch prof-eye" style="background:#2e6820" onclick="pickProfileEye(this)"></div>
+              <div class="swatch prof-eye" style="background:#9E82D9" onclick="pickProfileEye(this)"></div>
+            </div>
+          </div>
+          <!-- Valider -->
+          <button onclick="validateAvatar()" style="width:100%;height:54px;background:#e5197e;border:none;border-radius:18px;color:white;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;">Valider</button>
+        </div>
+      </div>
+
+      <!-- ══ Overlay carte ══ -->
+      <div id="map-overlay" style="display:none;position:absolute;inset:0;z-index:50;background:#fff;flex-direction:column;">
+        <!-- Header -->
+        <div style="padding:56px 18px 12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #F0F0F0;flex-shrink:0;">
+          <button onclick="closeMapEditor()" style="width:36px;height:36px;border-radius:50%;background:#F5F5F5;border:none;font-size:18px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;">←</button>
+          <h2 style="font-size:18px;font-weight:800;color:#111;">Adresse du foyer</h2>
+        </div>
+        <!-- Barre de recherche -->
+        <div style="padding:12px 18px;flex-shrink:0;display:flex;gap:8px;">
+          <input id="map-search" type="text" placeholder="Rechercher une adresse…" style="flex:1;height:42px;border:1.5px solid #E5E5E5;border-radius:12px;padding:0 14px;font-size:14px;font-family:inherit;outline:none;"/>
+          <button onclick="searchAddress()" style="height:42px;padding:0 16px;background:#D3007E;border:none;border-radius:12px;color:white;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">OK</button>
+        </div>
+        <!-- Carte Leaflet -->
+        <div id="leaflet-map" style="flex:1;min-height:0;"></div>
+        <!-- Adresse sélectionnée + valider -->
+        <div style="padding:14px 18px 20px;border-top:1px solid #F0F0F0;flex-shrink:0;">
+          <p id="map-selected-addr" style="font-size:13px;color:#666;margin-bottom:12px;text-align:center;line-height:1.4;">Déplacez le marqueur ou cliquez sur la carte</p>
+          <button onclick="validateAddress()" style="width:100%;height:52px;background:#D3007E;border:none;border-radius:16px;color:white;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;">Valider cette adresse</button>
+        </div>
+      </div>
+
       <!-- Nav bar -->
       <div class="h-nav">
         <div class="h-nav-item" onclick="goTo(4)">
@@ -1496,11 +1571,11 @@
 
         <!-- Month nav -->
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-          <button style="width:34px; height:34px; border-radius:50%; background:#F5F5F5; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+          <button onclick="prevCalMonth()" style="width:34px; height:34px; border-radius:50%; background:#F5F5F5; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
-          <span style="font-size:16px; font-weight:800; color:#111;">Mai 2026</span>
-          <button style="width:34px; height:34px; border-radius:50%; background:#F5F5F5; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+          <span id="cal-month-label" style="font-size:16px; font-weight:800; color:#111;">Mai 2026</span>
+          <button onclick="nextCalMonth()" style="width:34px; height:34px; border-radius:50%; background:#F5F5F5; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
@@ -1517,7 +1592,7 @@
         </div>
 
         <!-- Calendar grid (Mai 2026 : 1er = vendredi) -->
-        <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:24px;">
+        <div id="cal-grid" style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:24px;">
 
           <!-- Semaine 1 : vide x4, puis 1 2 3 -->
           <div></div><div></div><div></div><div></div>
@@ -1526,17 +1601,17 @@
           <div style="text-align:center; padding:6px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">3</span></div>
 
           <!-- Semaine 2 : 4 → 10 -->
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-4" onclick="selectCalDay(4)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">4</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
           </div>
           <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">5</span></div>
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-6" onclick="selectCalDay(6)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">6</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
           </div>
           <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">7</span></div>
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-8" onclick="selectCalDay(8)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">8</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#FFE566;"></div>
           </div>
@@ -1544,16 +1619,16 @@
           <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">10</span></div>
 
           <!-- Semaine 3 : 11 → 17 -->
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-11" onclick="selectCalDay(11)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">11</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
           </div>
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-12" onclick="selectCalDay(12)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">12</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
           </div>
           <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">13</span></div>
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-14" onclick="selectCalDay(14)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">14</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#A8ECC8;"></div>
           </div>
@@ -1562,16 +1637,16 @@
           <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">17</span></div>
 
           <!-- Semaine 4 : 18 → 24 -->
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-18" onclick="selectCalDay(18)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">18</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
           </div>
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-19" onclick="selectCalDay(19)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">19</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#FFE566;"></div>
           </div>
           <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">20</span></div>
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-21" onclick="selectCalDay(21)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">21</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#FFC7EA;"></div>
           </div>
@@ -1581,28 +1656,28 @@
 
           <!-- Semaine 5 : 25(Lu done) 26(Ma today) 27-31 -->
           <!-- Lu 25 – fait, rose -->
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-25" onclick="selectCalDay(25)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <div style="width:32px; height:32px; border-radius:50%; background:#FFC7EA; display:flex; align-items:center; justify-content:center;">
               <span style="font-size:13px; font-weight:800; color:#D3007E;">25</span>
             </div>
             <div style="width:5px; height:5px; border-radius:50%; background:#e5197e;"></div>
           </div>
           <!-- Ma 26 – aujourd'hui, jaune -->
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-26" onclick="selectCalDay(26)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <div style="width:32px; height:32px; border-radius:50%; background:#FACE2C; display:flex; align-items:center; justify-content:center;">
               <span style="font-size:13px; font-weight:800; color:#7A5000;">26</span>
             </div>
             <div style="width:5px; height:5px; border-radius:50%; background:#C47F00;"></div>
           </div>
           <!-- Me 27 -->
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-27" onclick="selectCalDay(27)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">27</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#E0E0E0;"></div>
           </div>
           <!-- Je 28 -->
           <div style="text-align:center; padding:4px 0;"><span style="font-size:13px; font-weight:600; color:#ccc;">28</span></div>
           <!-- Ve 29 -->
-          <div style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div id="cal-day-29" onclick="selectCalDay(29)" style="text-align:center; padding:4px 0; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; border-radius:10px;">
             <span style="font-size:13px; font-weight:600; color:#111;">29</span>
             <div style="width:5px; height:5px; border-radius:50%; background:#E0E0E0;"></div>
           </div>
@@ -1636,45 +1711,46 @@
         <h2 style="font-size:19px; font-weight:800; color:#111; margin-bottom:14px;">Cette semaine</h2>
 
         <!-- Lu 25 – fait -->
-        <div style="background:#FFF0F7; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; margin-bottom:10px;">
-          <div style="width:38px; height:38px; border-radius:12px; background:#FFC7EA; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#D3007E;">Lu</div>
+        <div id="cal-task-25" onclick="toggleCalTask(25)" style="background:#FFF0F7; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; margin-bottom:10px; cursor:pointer; transition:background 0.2s;">
+          <div id="cal-badge-25" style="width:38px; height:38px; border-radius:12px; background:#FFC7EA; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#D3007E;">Lu</div>
           <div style="flex:1;">
-            <p style="font-size:14px; font-weight:800; color:#111; text-decoration:line-through; opacity:0.6;">Nettoyer la cuisine</p>
+            <p id="cal-title-25" style="font-size:14px; font-weight:800; color:#111; text-decoration:line-through; opacity:0.5;">Nettoyer la cuisine</p>
             <p style="font-size:11px; color:#bbb; margin-top:2px;">Surfaces &amp; évier · 120 pts</p>
           </div>
-          <div style="width:24px; height:24px; border-radius:50%; background:#e5197e; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <div id="cal-cb-25" style="width:24px; height:24px; border-radius:50%; background:#e5197e; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
             <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </div>
 
         <!-- Ma 26 – en cours -->
-        <div style="background:#FFFBEC; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; margin-bottom:10px; border:1.5px solid #FACE2C;">
-          <div style="width:38px; height:38px; border-radius:12px; background:#FACE2C; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#7A5000;">Ma</div>
+        <div id="cal-task-26" onclick="toggleCalTask(26)" style="background:#FFFBEC; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; margin-bottom:10px; border:1.5px solid #FACE2C; cursor:pointer; transition:background 0.2s;">
+          <div id="cal-badge-26" style="width:38px; height:38px; border-radius:12px; background:#FACE2C; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#7A5000;">Ma</div>
           <div style="flex:1;">
-            <p style="font-size:14px; font-weight:800; color:#111;">Sortir les poubelles</p>
+            <p id="cal-title-26" style="font-size:14px; font-weight:800; color:#111;">Sortir les poubelles</p>
             <p style="font-size:11px; color:#aaa; margin-top:2px;">Cuisine &amp; recyclage · 50 pts</p>
           </div>
-          <span style="font-size:10px; font-weight:700; color:#C47F00; background:#FFE566; padding:4px 9px; border-radius:10px; flex-shrink:0;">En cours</span>
+          <span id="cal-encours-26" style="font-size:10px; font-weight:700; color:#C47F00; background:#FFE566; padding:4px 9px; border-radius:10px; flex-shrink:0;">En cours</span>
+          <div id="cal-cb-26" style="display:none; width:24px; height:24px; border-radius:50%; flex-shrink:0; align-items:center; justify-content:center;"></div>
         </div>
 
         <!-- Me 27 – à venir -->
-        <div style="background:#F5F5F5; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; margin-bottom:10px;">
-          <div style="width:38px; height:38px; border-radius:12px; background:#E8E8E8; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#999;">Me</div>
+        <div id="cal-task-27" onclick="toggleCalTask(27)" style="background:#F5F5F5; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; margin-bottom:10px; transition:background 0.2s; cursor:pointer;">
+          <div id="cal-badge-27" style="width:38px; height:38px; border-radius:12px; background:#E8E8E8; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#999;">Me</div>
           <div style="flex:1;">
-            <p style="font-size:14px; font-weight:800; color:#aaa;">Lancer une machine</p>
+            <p id="cal-title-27" style="font-size:14px; font-weight:800; color:#aaa;">Lancer une machine</p>
             <p style="font-size:11px; color:#ccc; margin-top:2px;">Couleurs sombres · 70 pts</p>
           </div>
-          <div style="width:22px; height:22px; border-radius:50%; border:1.5px solid #DDD; flex-shrink:0;"></div>
+          <div id="cal-cb-27" style="width:22px; height:22px; border-radius:50%; border:1.5px solid #DDD; flex-shrink:0; display:flex; align-items:center; justify-content:center;"></div>
         </div>
 
         <!-- Ve 29 – à venir -->
-        <div style="background:#F5F5F5; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px;">
-          <div style="width:38px; height:38px; border-radius:12px; background:#E8E8E8; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#999;">Ve</div>
+        <div id="cal-task-29" onclick="toggleCalTask(29)" style="background:#F5F5F5; border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:14px; transition:background 0.2s; cursor:pointer;">
+          <div id="cal-badge-29" style="width:38px; height:38px; border-radius:12px; background:#E8E8E8; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; font-weight:800; color:#999;">Ve</div>
           <div style="flex:1;">
-            <p style="font-size:14px; font-weight:800; color:#aaa;">Passer l'aspirateur</p>
+            <p id="cal-title-29" style="font-size:14px; font-weight:800; color:#aaa;">Passer l'aspirateur</p>
             <p style="font-size:11px; color:#ccc; margin-top:2px;">Salon &amp; couloirs · 60 pts</p>
           </div>
-          <div style="width:22px; height:22px; border-radius:50%; border:1.5px solid #DDD; flex-shrink:0;"></div>
+          <div id="cal-cb-29" style="width:22px; height:22px; border-radius:50%; border:1.5px solid #DDD; flex-shrink:0; display:flex; align-items:center; justify-content:center;"></div>
         </div>
 
       </div>
@@ -1715,6 +1791,93 @@
 
   /* ── Bouton Rejoindre ── */
   /* ── Connexion ── */
+  /* ── Éditeur avatar profil ── */
+  function openAvatarEditor() {
+    document.getElementById('avatar-editor').style.display = 'flex';
+  }
+
+  function closeAvatarEditor() {
+    document.getElementById('avatar-editor').style.display = 'none';
+  }
+
+  function pickProfileStyle(el) {
+    document.querySelectorAll('.prof-style').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function pickProfileHair(el) {
+    document.querySelectorAll('.prof-hair').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function pickProfileEye(el) {
+    document.querySelectorAll('.prof-eye').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function validateAvatar() {
+    closeAvatarEditor();
+  }
+
+  /* ── Carte / foyer ── */
+  let leafletMap = null, leafletMarker = null;
+  let mapAddrLine1 = '', mapAddrLine2 = '';
+
+  function openMapEditor() {
+    document.getElementById('map-overlay').style.display = 'flex';
+    setTimeout(() => {
+      if (!leafletMap) {
+        leafletMap = L.map('leaflet-map', { zoomControl: true }).setView([48.857, 2.346], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap'
+        }).addTo(leafletMap);
+        leafletMarker = L.marker([48.857, 2.346], { draggable: true }).addTo(leafletMap);
+        leafletMarker.on('dragend', e => reverseGeocode(e.target.getLatLng().lat, e.target.getLatLng().lng));
+        leafletMap.on('click', e => { leafletMarker.setLatLng(e.latlng); reverseGeocode(e.latlng.lat, e.latlng.lng); });
+        reverseGeocode(48.857, 2.346);
+      }
+      leafletMap.invalidateSize();
+    }, 120);
+  }
+
+  function closeMapEditor() {
+    document.getElementById('map-overlay').style.display = 'none';
+  }
+
+  function reverseGeocode(lat, lng) {
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+      .then(r => r.json())
+      .then(d => {
+        const a = d.address || {};
+        const road = [a.house_number, a.road].filter(Boolean).join(' ');
+        const city = [a.postcode, a.city || a.town || a.village].filter(Boolean).join(' ');
+        mapAddrLine1 = road || d.display_name.split(',')[0];
+        mapAddrLine2 = city || '';
+        document.getElementById('map-selected-addr').textContent = [mapAddrLine1, mapAddrLine2].filter(Boolean).join(', ');
+      })
+      .catch(() => { mapAddrLine1 = `${lat.toFixed(5)}, ${lng.toFixed(5)}`; mapAddrLine2 = ''; });
+  }
+
+  function searchAddress() {
+    const q = document.getElementById('map-search').value.trim();
+    if (!q) return;
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=1`)
+      .then(r => r.json())
+      .then(d => {
+        if (!d.length) return;
+        const lat = parseFloat(d[0].lat), lng = parseFloat(d[0].lon);
+        leafletMap.setView([lat, lng], 16);
+        leafletMarker.setLatLng([lat, lng]);
+        reverseGeocode(lat, lng);
+      });
+  }
+
+  function validateAddress() {
+    if (mapAddrLine1) document.getElementById('foyer-line1').textContent = mapAddrLine1;
+    if (mapAddrLine2) document.getElementById('foyer-line2').textContent = mapAddrLine2;
+    closeMapEditor();
+  }
+
   function openLoginForm() {
     const overlay = document.getElementById('login-overlay');
     overlay.style.display = 'flex';
@@ -2153,6 +2316,90 @@
   }
   fitScreen();
   window.addEventListener('resize', fitScreen);
+
+  /* ── Calendrier ── */
+  const MONTHS_FR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const CAL_TODAY={y:2026,m:4,d:26};
+  let calYear=2026,calMonth=4,calSelectedDay=null;
+  const CAL_EVENTS={'2026-4':{4:'#FFC7EA',6:'#FFC7EA',8:'#FFE566',11:'#FFC7EA',12:'#FFC7EA',14:'#A8ECC8',18:'#FFC7EA',19:'#FFE566',21:'#FFC7EA',25:1,26:1,27:1,29:1}};
+  const CAL_TASK_DAYS=new Set([25,26,27,29]);
+  const calTaskDone={25:true,26:false,27:false,29:false};
+  const CHECK_SVG='<svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function renderCalendar(y,m){
+    const keepSel=(y===calYear&&m===calMonth);
+    calYear=y; calMonth=m;
+    document.getElementById('cal-month-label').textContent=MONTHS_FR[m]+' '+y;
+    const off=(new Date(y,m,1).getDay()+6)%7;
+    const tot=new Date(y,m+1,0).getDate();
+    const evts=CAL_EVENTS[y+'-'+m]||{};
+    let h='';
+    for(let i=0;i<off;i++) h+='<div></div>';
+    for(let d=1;d<=tot;d++){
+      const isToday=(y===CAL_TODAY.y&&m===CAL_TODAY.m&&d===CAL_TODAY.d);
+      const isDone25=(y===CAL_TODAY.y&&m===CAL_TODAY.m&&d===25);
+      const ev=evts[d]; const hasEv=!!ev;
+      const dotColor=ev===1?(calTaskDone[d]?'#e5197e':(d===26?'#C47F00':'#E0E0E0')):(ev||'');
+      const cId=hasEv?`id="cal-day-${d}" `:'';
+      const cOc=hasEv?`onclick="selectCalDay(${d})" `:'';
+      const sCur=hasEv?'cursor:pointer;':'';
+      const sFlex=hasEv?'display:flex;flex-direction:column;align-items:center;gap:3px;':'';
+      const sPad=hasEv?'padding:4px 0;':'padding:6px 0;';
+      if(isToday){
+        h+=`<div ${cId}${cOc}style="text-align:center;${sPad}${sFlex}${sCur}border-radius:10px;"><div style="width:32px;height:32px;border-radius:50%;background:#FACE2C;display:flex;align-items:center;justify-content:center;"><span style="font-size:13px;font-weight:800;color:#7A5000;">${d}</span></div><div id="cal-dot-${d}" style="width:5px;height:5px;border-radius:50%;background:${dotColor};"></div></div>`;
+      } else if(isDone25){
+        const bg=calTaskDone[25]?'#FFC7EA':'#E8E8E8',nc=calTaskDone[25]?'#D3007E':'#999';
+        h+=`<div ${cId}${cOc}style="text-align:center;${sPad}${sFlex}${sCur}border-radius:10px;"><div style="width:32px;height:32px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;"><span style="font-size:13px;font-weight:800;color:${nc};">${d}</span></div><div id="cal-dot-${d}" style="width:5px;height:5px;border-radius:50%;background:${dotColor};"></div></div>`;
+      } else if(hasEv){
+        h+=`<div ${cId}${cOc}style="text-align:center;${sPad}${sFlex}${sCur}border-radius:10px;"><span style="font-size:13px;font-weight:600;color:#111;">${d}</span><div id="cal-dot-${d}" style="width:5px;height:5px;border-radius:50%;background:${dotColor};"></div></div>`;
+      } else {
+        h+=`<div style="text-align:center;${sPad}"><span style="font-size:13px;font-weight:600;color:#ccc;">${d}</span></div>`;
+      }
+    }
+    document.getElementById('cal-grid').innerHTML=h;
+    if(keepSel&&calSelectedDay!==null){const el=document.getElementById('cal-day-'+calSelectedDay);if(el){el.style.outline='2px solid #D3007E';el.style.background='rgba(211,0,126,0.06)';}}
+  }
+
+  function prevCalMonth(){let m=calMonth-1,y=calYear;if(m<0){m=11;y--;}calSelectedDay=null;renderCalendar(y,m);}
+  function nextCalMonth(){let m=calMonth+1,y=calYear;if(m>11){m=0;y++;}calSelectedDay=null;renderCalendar(y,m);}
+
+  function selectCalDay(day){
+    if(calSelectedDay!==null){const p=document.getElementById('cal-day-'+calSelectedDay);if(p){p.style.outline='';p.style.background='';}}
+    calSelectedDay=day;
+    const el=document.getElementById('cal-day-'+day);
+    if(el){el.style.outline='2px solid #D3007E';el.style.background='rgba(211,0,126,0.06)';}
+    if(calYear===CAL_TODAY.y&&calMonth===CAL_TODAY.m&&CAL_TASK_DAYS.has(day)){const c=document.getElementById('cal-task-'+day);if(c)c.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  }
+
+  function toggleCalTask(day){
+    calTaskDone[day]=!calTaskDone[day];
+    const done=calTaskDone[day];
+    const card=document.getElementById('cal-task-'+day);
+    const badge=document.getElementById('cal-badge-'+day);
+    const title=document.getElementById('cal-title-'+day);
+    const cb=document.getElementById('cal-cb-'+day);
+    if(done){
+      card.style.background='#FFF0F7'; card.style.border='none';
+      badge.style.background='#FFC7EA'; badge.style.color='#D3007E';
+      title.style.textDecoration='line-through'; title.style.opacity='0.5'; title.style.color='#111';
+      if(cb){cb.style.display='flex';cb.style.background='#e5197e';cb.style.border='none';cb.style.width='24px';cb.style.height='24px';cb.style.borderRadius='50%';cb.style.alignItems='center';cb.style.justifyContent='center';cb.innerHTML=CHECK_SVG;}
+      const ec=document.getElementById('cal-encours-'+day);if(ec)ec.style.display='none';
+    } else if(day===26){
+      card.style.background='#FFFBEC'; card.style.border='1.5px solid #FACE2C';
+      badge.style.background='#FACE2C'; badge.style.color='#7A5000';
+      title.style.textDecoration=''; title.style.opacity=''; title.style.color='#111';
+      if(cb){cb.style.display='none';cb.innerHTML='';}
+      const ec=document.getElementById('cal-encours-26');if(ec)ec.style.display='';
+    } else {
+      card.style.background='#F5F5F5'; card.style.border='none';
+      badge.style.background='#E8E8E8'; badge.style.color='#999';
+      title.style.textDecoration=''; title.style.opacity=''; title.style.color='#aaa';
+      if(cb){cb.style.display='flex';cb.style.background='';cb.style.border='1.5px solid #DDD';cb.style.width='22px';cb.style.height='22px';cb.innerHTML='';}
+    }
+    renderCalendar(calYear,calMonth);
+  }
+
+  renderCalendar(2026,4);
 </script>
 </body>
 </html>
