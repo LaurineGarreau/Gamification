@@ -948,12 +948,12 @@
               <p style="font-size:17px;font-weight:800;color:#111;">Mon Objectif</p>
               <p style="font-size:13px;color:#999;margin-top:2px;">Cette semaine</p>
             </div>
-            <p style="font-size:13px;font-weight:600;color:#111;"><span style="font-size:22px;font-weight:800;">240</span> / 500</p>
+            <p style="font-size:13px;font-weight:600;color:#111;"><span id="s7-pts" style="font-size:22px;font-weight:800;">240</span> / 500</p>
           </div>
           <div style="height:10px;background:#E0E0E0;border-radius:6px;overflow:hidden;margin-bottom:10px;">
-            <div style="height:100%;width:48%;background:linear-gradient(90deg,#FACE2C,#F67DC6);border-radius:6px;"></div>
+            <div id="s7-bar" style="height:100%;width:48%;background:linear-gradient(90deg,#FACE2C,#F67DC6);border-radius:6px;"></div>
           </div>
-          <p style="font-size:13px;font-weight:600;color:#7c3aed;">✦ Encore 260 PTS pour le Joker !</p>
+          <p id="s7-remaining" style="font-size:13px;font-weight:600;color:#7c3aed;">✦ Encore 260 PTS pour le Joker !</p>
         </div>
 
         <!-- Header Mes Tâches -->
@@ -1059,7 +1059,7 @@
               <p style="font-size:17px; font-weight:800; color:#111;">Objectif coloc</p>
               <p style="font-size:13px; color:#999; margin-top:2px;">L'effort collectif de cette semaine</p>
             </div>
-            <p style="font-size:13px; font-weight:600; color:#111;"><span style="font-size:22px; font-weight:800;">85</span> / 100</p>
+            <p style="font-size:13px; font-weight:600; color:#111;"><span id="s9-score" style="font-size:22px; font-weight:800;">85</span> / 100</p>
           </div>
           <!-- Anneau de progression centré -->
           <div style="display:flex; justify-content:center; margin-bottom:18px;">
@@ -1072,10 +1072,10 @@
                   </linearGradient>
                 </defs>
                 <circle cx="95" cy="95" r="76" fill="none" stroke="#E8E4E0" stroke-width="16"/>
-                <circle cx="95" cy="95" r="76" fill="none" stroke="url(#ring-grad)" stroke-width="16" stroke-dasharray="406 478" stroke-linecap="round"/>
+                <circle id="s9-ring" cx="95" cy="95" r="76" fill="none" stroke="url(#ring-grad)" stroke-width="16" stroke-dasharray="406 478" stroke-linecap="round"/>
               </svg>
               <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px;">
-                <span style="font-size:38px; font-weight:800; color:#111; letter-spacing:-1px;">85%</span>
+                <span id="s9-pct" style="font-size:38px; font-weight:800; color:#111; letter-spacing:-1px;">85%</span>
                 <div style="border:1.5px solid #D8D0CA; border-radius:20px; padding:4px 13px; background:white;">
                   <span style="font-size:10px; font-weight:700; color:#888; letter-spacing:1px;">ON TRACK</span>
                 </div>
@@ -1084,9 +1084,9 @@
           </div>
           <!-- Barre gradient -->
           <div style="height:10px; background:#E0E0E0; border-radius:6px; overflow:hidden; margin-bottom:10px;">
-            <div style="height:100%; width:85%; background:linear-gradient(90deg,#FACE2C,#F67DC6); border-radius:6px;"></div>
+            <div id="s9-bar" style="height:100%; width:85%; background:linear-gradient(90deg,#FACE2C,#F67DC6); border-radius:6px;"></div>
           </div>
-          <p style="font-size:13px; font-weight:600; color:#7c3aed;">✦ Encore 15 tâches pour le bonus coloc !</p>
+          <p id="s9-remaining" style="font-size:13px; font-weight:600; color:#7c3aed;">✦ Encore 15 tâches pour le bonus coloc !</p>
         </div>
 
         <!-- Classement -->
@@ -1122,7 +1122,7 @@
             <img src="pdp Lisa.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
           </div>
           <div style="flex:1;">
-            <p style="font-size:16px; font-weight:800; color:#111; line-height:1.2;">Alex</p>
+            <p style="font-size:16px; font-weight:800; color:#111; line-height:1.2;">Lisa</p>
             <p style="font-size:12px; color:#666; margin-top:4px;">12 tâches · 380 pts</p>
           </div>
           <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
@@ -1140,7 +1140,7 @@
             <img src="pdpmaxime.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
           </div>
           <div style="flex:1;">
-            <p style="font-size:16px; font-weight:800; color:#111; line-height:1.2;">Amir</p>
+            <p style="font-size:16px; font-weight:800; color:#111; line-height:1.2;">Maxime</p>
             <p style="font-size:12px; color:#666; margin-top:4px;">10 tâches · 320 pts</p>
           </div>
           <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
@@ -1158,7 +1158,7 @@
             <img src="pdp Jean.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
           </div>
           <div style="flex:1;">
-            <p style="font-size:16px; font-weight:800; color:#111; line-height:1.2;">Nora</p>
+            <p style="font-size:16px; font-weight:800; color:#111; line-height:1.2;">Jean</p>
             <p style="font-size:12px; color:#666; margin-top:4px;">8 tâches · 240 pts</p>
           </div>
           <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
@@ -1355,7 +1355,7 @@
                   <img src="pdp Lisa.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
                 </div>
                 <div style="flex:1;">
-                  <p style="font-size:14px; font-weight:700; color:#111;">Alex</p>
+                  <p style="font-size:14px; font-weight:700; color:#111;">Lisa</p>
                   <p style="font-size:12px; color:#999;">Reine du tri</p>
                 </div>
               </div>
@@ -1364,7 +1364,7 @@
                   <img src="pdpmaxime.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
                 </div>
                 <div style="flex:1;">
-                  <p style="font-size:14px; font-weight:700; color:#111;">Amir</p>
+                  <p style="font-size:14px; font-weight:700; color:#111;">Maxime</p>
                   <p style="font-size:12px; color:#999;">Maître du salon</p>
                 </div>
                 <span style="background:#F2F2F2; color:#888; font-size:10px; font-weight:600; padding:4px 10px; border-radius:12px; white-space:nowrap; flex-shrink:0;">ABSENT·E</span>
@@ -1374,7 +1374,7 @@
                   <img src="pdp Jean.png" onerror="this.style.display='none'" style="width:100%; height:100%; object-fit:cover;"/>
                 </div>
                 <div style="flex:1;">
-                  <p style="font-size:14px; font-weight:700; color:#111;">Nora</p>
+                  <p style="font-size:14px; font-weight:700; color:#111;">Jean</p>
                   <p style="font-size:12px; color:#999;">Pro de la salle de bain</p>
                 </div>
               </div>
@@ -1779,6 +1779,29 @@
   /* ── Toggle checkboxes tâches ── */
   const taskChecked = [false, false, false, true];
   const taskColors  = ['#D3007E','#C47F00','#0288C7','#1A8C56'];
+  const taskPoints  = [50, 120, 70, 240];
+  const GOAL_PTS    = 500;
+  const CIRC        = 477.5; // 2 * π * 76
+
+  function updateProgress() {
+    const earned = taskPoints.reduce((s, p, i) => s + (taskChecked[i] ? p : 0), 0);
+    const pct    = Math.min(100, Math.round(earned / GOAL_PTS * 100));
+    const remain = Math.max(0, GOAL_PTS - earned);
+    // step7
+    document.getElementById('s7-pts').textContent     = earned;
+    document.getElementById('s7-bar').style.width     = pct + '%';
+    document.getElementById('s7-remaining').textContent = remain > 0
+      ? `✦ Encore ${remain} PTS pour le Joker !`
+      : '✦ Objectif atteint ! 🎉';
+    // step9
+    document.getElementById('s9-ring').setAttribute('stroke-dasharray', `${(pct/100*CIRC).toFixed(1)} ${CIRC}`);
+    document.getElementById('s9-bar').style.width  = pct + '%';
+    document.getElementById('s9-pct').textContent  = pct + '%';
+    document.getElementById('s9-score').textContent = pct;
+    document.getElementById('s9-remaining').textContent = remain > 0
+      ? `✦ Encore ${remain} PTS pour le bonus coloc !`
+      : '✦ Objectif atteint ! 🎉';
+  }
 
   function toggleCheck(idx) {
     taskChecked[idx] = !taskChecked[idx];
@@ -1792,7 +1815,10 @@
       el.style.boxShadow   = '0 1px 4px rgba(0,0,0,0.15)';
       el.innerHTML = '';
     }
+    updateProgress();
   }
+
+  updateProgress();
 
   function removePerson(idx) {
     const card = document.getElementById('person-card-' + idx);
