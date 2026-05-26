@@ -660,7 +660,6 @@
               <div style="padding:0 14px 14px; background:white; flex-shrink:0;">
                 <button id="home-validate-btn" onclick="validateHomeTask()" style="width:100%; height:48px; background:#FFC7EA; border:none; border-radius:14px; font-size:15px; font-weight:800; color:#e5197e; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:8px;">
                   Valider ma tâche
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
               </div>
             </div>
@@ -684,7 +683,6 @@
               <div style="padding:0 14px 14px; background:white; flex-shrink:0;">
                 <button onclick="validateSliderTask(this, 0)" style="width:100%; height:48px; background:#FFC7EA; border:none; border-radius:14px; font-size:15px; font-weight:800; color:#e5197e; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:8px;">
                   Valider ma tâche
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
               </div>
             </div>
@@ -708,7 +706,6 @@
               <div style="padding:0 14px 14px; background:white; flex-shrink:0;">
                 <button onclick="validateSliderTask(this, 2)" style="width:100%; height:48px; background:#FFC7EA; border:none; border-radius:14px; font-size:15px; font-weight:800; color:#e5197e; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:8px;">
                   Valider ma tâche
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5197e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
               </div>
             </div>
@@ -2066,12 +2063,18 @@
   }
 
   function validateSliderTask(btn, idx) {
-    if (!taskChecked[idx]) toggleCheck(idx);
-    btn.style.background = '#D1FAE5';
-    btn.style.color = '#059669';
-    btn.style.cursor = 'default';
-    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#059669" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Tâche validée !';
-    btn.onclick = null;
+    toggleCheck(idx);
+    if (taskChecked[idx]) {
+      btn.style.background = '#D1FAE5';
+      btn.style.color = '#059669';
+      btn.style.cursor = 'pointer';
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#059669" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Tâche validée !';
+    } else {
+      btn.style.background = '#FFC7EA';
+      btn.style.color = '#e5197e';
+      btn.style.cursor = 'pointer';
+      btn.innerHTML = 'Valider ma tâche';
+    }
   }
 
   function validateHomeTask() {
@@ -2328,6 +2331,8 @@
   }
 
   let notifTimer = null;
+  let notifHideTimer = null;
+  let notifShown = false;
 
   /* ── Navigation ── */
   let current = 0;
@@ -2349,17 +2354,24 @@
       from.className = 'step ' + (dir > 0 ? 'hidden-left' : 'hidden-right');
       to.className   = 'step active';
     }
-    // Annuler le timer si on quitte step4
-    if (current === 4) { clearTimeout(notifTimer); notifTimer = null; }
+    // Annuler les timers si on quitte step4
+    if (current === 4) {
+      clearTimeout(notifTimer);
+      clearTimeout(notifHideTimer);
+      notifTimer = null;
+      notifHideTimer = null;
+      document.getElementById('notif').classList.remove('show');
+    }
     current = next;
     setStatusBarColor(next === 5 ? '#fff' : '#111');
-    // Lancer la notif 4s après l'arrivée sur step4
-    if (next === 4) {
+    // Lancer la notif 2s après la première arrivée sur step4
+    if (next === 4 && !notifShown) {
       notifTimer = setTimeout(() => {
         const notif = document.getElementById('notif');
         notif.classList.add('show');
-        setTimeout(() => notif.classList.remove('show'), 5000);
-      }, 4000);
+        notifShown = true;
+        notifHideTimer = setTimeout(() => notif.classList.remove('show'), 5000);
+      }, 2000);
     }
   }
 
